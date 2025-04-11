@@ -15,38 +15,20 @@ const HeroSection: React.FC = () => {
   const animationRef = useRef<number>(0);
 
   // Update time every minute
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTime(new Date());
-    }, 60000);
-    
-    return () => clearInterval(timer);
-  }, []);
 
-  // Simulate getting weather data
-  useEffect(() => {
-    const getWeatherData = async () => {
-      // In a real app, this would be an API call
-      setTimeout(() => {
-        setWeather({ temp: '39°C', condition: 'Sunny' });
-        setLocation('Mathura Uttar Pardesh India');
-      }, 1500);
-    };
-    
-    getWeatherData();
-  }, []);
+
 
   // Canvas animation for interactive background
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    
+
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-    
+
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    
+
     const particles: { x: number; y: number; size: number; speedX: number; speedY: number; color: string }[] = [];
     const particleCount = 100;
     
@@ -232,15 +214,8 @@ const HeroSection: React.FC = () => {
           </motion.div>
         </div>
       </div>
-      
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 1.2, repeat: Infinity, repeatType: 'reverse' }}
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20"
-      >
-        <ArrowDown className="text-gray-600 dark:text-gray-400" />
-      </motion.div>
+
+
     </section>
   );
 };

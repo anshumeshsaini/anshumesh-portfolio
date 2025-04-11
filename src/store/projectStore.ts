@@ -23,6 +23,26 @@ const projectData: Project[] = [
     "language": "javascript"
   },
   {
+    "id": "7",
+    "title": "Aether-Commerce – AI-Enhanced E-Commerce Platform",
+    "description": "A futuristic full-stack eCommerce platform blending AI with real-time user interactions, smart product discovery, and a visually immersive experience using React and Supabase.",
+    "technologies": [
+      "React.js",
+      "Tailwind CSS",
+      "Framer Motion",
+      "GSAP",
+      "Supabase",
+      "OpenAI API"
+    ],
+    "image": "https://images.unsplash.com/photo-1688561808434-886a6dd97b8c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZWNvbW1lcmNlfGVufDB8fDB8fHww",
+    "githubUrl": "https://github.com/anshumeshsaini/aether-commerce-verse",
+    "liveUrl": "https://aether-commerce.vercel.app/",
+    "featured": true,
+    "category": "ecommerce",
+    "codeSnippet": "",
+    "language": "javascript"
+  },
+  {
 
     "id": "2",
     "title": "Casino Gambling Game Website",
@@ -38,6 +58,19 @@ const projectData: Project[] = [
 
   },
   {
+    "id": "6",
+    "title": "filealchemy – Frontend PDF & Data Conversion Platform",
+    "description": "A futuristic frontend-only app for editing and converting PDFs and various file formats, featuring advanced tools and blazing-fast performance with zero backend.",
+    "technologies": ["React", "TypeScript", "Vite", "Tailwind CSS", "Framer Motion", "pdf-lib", "Web APIs"],
+    "image": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=500&auto=format&fit=crop&q=60",
+    "githubUrl": "https://github.com/anshumeshsaini/fileflow-alchemy-lab",
+    "liveUrl": "https://filealchemy.vercel.app/",
+    "featured": true,
+    "category": "utility",
+    "codeSnippet": "",
+    "language": "typescript"
+  },
+  {
     "id": "3",
     "title": "ZoomCar Clone",
     "description": "A car rental platform built in React.js featuring powerful booking, top car listings, travel experiences, and road condition insights.",
@@ -50,6 +83,9 @@ const projectData: Project[] = [
     "codeSnippet": "",
     "language": "javascript"
   },
+
+
+
 
   {
     "id": "4",
@@ -77,7 +113,8 @@ const projectData: Project[] = [
     "category": "music",
     "codeSnippet": "",
     "language": "javascript"
-  }
+  },
+
 
 ];
 

@@ -89,35 +89,41 @@ const Navbar: React.FC = () => {
           
           <div className="flex items-center space-x-4">
             <motion.a
-              href="https://github.com/username"
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              className="text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400"
+                href="https://github.com/anshumeshsaini"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.15 }}
+                whileTap={{ scale: 0.95 }}
+                className="relative p-3 rounded-full backdrop-blur-md bg-blue-400/10 border border-blue-300/20 text-white shadow-md transition-all duration-300 hover:shadow-blue-400/40"
             >
-              <Github size={20} />
+              <span className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/20 to-teal-400/20 blur-md opacity-50 hover:opacity-70 transition-opacity duration-500"></span>
+              <Github size={20} className="relative z-10 text-blue-200 hover:text-blue-300 transition-colors duration-300" />
             </motion.a>
+
             <motion.a
-              href="https://linkedin.com/in/username"
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              className="text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400"
+                href="https://www.linkedin.com/in/anshumesh-saini-628760234/"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.15 }}
+                whileTap={{ scale: 0.95 }}
+                className="relative p-3 rounded-full backdrop-blur-md bg-blue-400/10 border border-blue-300/20 text-white shadow-md transition-all duration-300 hover:shadow-blue-500/40"
             >
-              <Linkedin size={20} />
+              <span className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/20 to-cyan-400/20 blur-md opacity-50 hover:opacity-70 transition-opacity duration-500"></span>
+              <Linkedin size={20} className="relative z-10 text-blue-200 hover:text-blue-300 transition-colors duration-300" />
             </motion.a>
+
             <motion.a
-              href="https://twitter.com/username"
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              className="text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400"
+                href="https://www.instagram.com/anshumesh.saini?igsh=OG5yeTRxYnZxN2Js"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.15 }}
+                whileTap={{ scale: 0.95 }}
+                className="relative p-3 rounded-full backdrop-blur-md bg-blue-400/10 border border-blue-300/20 text-white shadow-md transition-all duration-300 hover:shadow-sky-400/40"
             >
-              <Twitter size={20} />
+              <span className="absolute inset-0 rounded-full bg-gradient-to-br from-sky-400/20 to-blue-500/20 blur-md opacity-50 hover:opacity-70 transition-opacity duration-500"></span>
+              <Twitter size={20} className="relative z-10 text-sky-200 hover:text-sky-300 transition-colors duration-300" />
             </motion.a>
+
           </div>
         </div>
 

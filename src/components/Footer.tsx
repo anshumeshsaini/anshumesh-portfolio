@@ -11,45 +11,58 @@ const Footer: React.FC = () => {
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
-            <Link to="/" className="text-2xl font-bold mb-4 inline-block">
-              <span className="bg-gradient-to-r from-blue-500 to-teal-400 bg-clip-text text-transparent">
-                Anshumesh
-              </span>
+            <Link
+                to="/"
+                className="text-3xl font-bold mb-6 inline-block relative group"
+            >
+  <span className="bg-gradient-to-r from-blue-500 via-cyan-400 to-teal-400 bg-clip-text text-transparent animate-gradient-x transition-all duration-700 ease-in-out">
+    Anshumesh
+  </span>
+
+              {/* Optional glowing aura effect */}
+              <span className="absolute inset-0 blur-md bg-gradient-to-r from-blue-500 via-cyan-400 to-teal-400 opacity-25 group-hover:opacity-40 transition duration-700 rounded-xl"></span>
             </Link>
+
             <p className="text-gray-400 mb-6 max-w-md">
               Full-stack developer and AI specialist with 15+ years of experience building innovative digital solutions for clients worldwide.
             </p>
             <div className="flex space-x-4">
               <motion.a
-                href="https://github.com/username"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.1, y: -3 }}
-                whileTap={{ scale: 0.9 }}
-                className="text-gray-400 hover:text-white transition-colors duration-300"
+                  href="https://github.com/anshumeshsaini"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.15, y: -3 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="relative p-3 rounded-full backdrop-blur-md bg-white/5 border border-white/10 text-white shadow-lg hover:shadow-blue-400/30 transition-all duration-300"
               >
-                <Github size={20} />
+                <span className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/20 to-indigo-500/20 blur-md opacity-40 group-hover:opacity-60 transition-opacity duration-500"></span>
+                <Github size={20} className="relative z-10 text-gray-300 group-hover:text-white transition-colors duration-300" />
               </motion.a>
+
               <motion.a
-                href="https://linkedin.com/in/username"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.1, y: -3 }}
-                whileTap={{ scale: 0.9 }}
-                className="text-gray-400 hover:text-white transition-colors duration-300"
+                  href="https://www.linkedin.com/in/anshumesh-saini-628760234/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.15, y: -3 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="relative p-3 rounded-full backdrop-blur-md bg-white/5 border border-white/10 text-white shadow-lg hover:shadow-sky-400/30 transition-all duration-300 group"
               >
-                <Linkedin size={20} />
+                <span className="absolute inset-0 rounded-full bg-gradient-to-br from-sky-400/20 to-blue-500/20 blur-md opacity-40 group-hover:opacity-60 transition-opacity duration-500"></span>
+                <Linkedin size={20} className="relative z-10 text-gray-300 group-hover:text-white transition-colors duration-300" />
               </motion.a>
+
               <motion.a
-                href="https://twitter.com/username"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.1, y: -3 }}
-                whileTap={{ scale: 0.9 }}
-                className="text-gray-400 hover:text-white transition-colors duration-300"
+                  href="https://www.instagram.com/anshumesh.saini?igsh=OG5yeTRxYnZxN2Js"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.15, y: -3 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="relative p-3 rounded-full backdrop-blur-md bg-white/5 border border-white/10 text-white shadow-lg hover:shadow-sky-300/30 transition-all duration-300 group"
               >
-                <Twitter size={20} />
+                <span className="absolute inset-0 rounded-full bg-gradient-to-br from-sky-300/20 to-blue-400/20 blur-md opacity-40 group-hover:opacity-60 transition-opacity duration-500"></span>
+                <Twitter size={20} className="relative z-10 text-gray-300 group-hover:text-white transition-colors duration-300" />
               </motion.a>
+
             </div>
           </div>
           

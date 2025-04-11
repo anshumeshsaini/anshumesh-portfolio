@@ -34,7 +34,7 @@ const testimonialData: Testimonial[] = [
     "position": "Hackathon Team Member",
     "company": "Hackathon Project",
     "testimonial": "During our hackathon, Anshumesh played a key role in ensuring we delivered a high-quality, functional prototype. His ability to work under pressure and write clean, scalable code was truly impressive.",
-    "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixid=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+    "image": "",
     "rating": 5
   }
 ];
