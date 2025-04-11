@@ -3,6 +3,7 @@ import { motion, useInView } from 'framer-motion';
 import { Download, Github, Code, Award, Briefcase, Coffee } from 'lucide-react';
 import { useGithubStore } from '../store/githubStore';
 import anshumesh from './anshumesh.jpeg'
+import './about.css'
 
 const AboutSection: React.FC = () => {
   const { stats, fetchStats } = useGithubStore();
@@ -90,66 +91,88 @@ const AboutSection: React.FC = () => {
             animate={isInView ? "visible" : "hidden"}
             variants={containerVariants}
           >
-            <motion.h3 
-              variants={itemVariants}
-              className="text-2xl font-bold mb-4 text-gray-800 dark:text-white"
+            <motion.h3
+                variants={itemVariants}
+                className="text-3xl md:text-4xl font-extrabold mb-6 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent tracking-wide animate-glow-title"
             >
-              Full-Stack Developer & AI Specialist
+               Full-Stack Developer
             </motion.h3>
-            
-            <motion.p 
-              variants={itemVariants}
-              className="text-gray-600 dark:text-gray-300 mb-6"
+
+
+            <motion.p
+                variants={itemVariants}
+                className="text-gray-600 dark:text-gray-300 mb-6"
             >
-              With over 15 years of experience in software development, I specialize in building 
-              high-performance web applications using cutting-edge technologies. My expertise spans 
-              across frontend, backend, and AI integration, allowing me to deliver complete solutions 
-              that meet complex business requirements.
+              I'm Anshumesh Saini — a passionate full-stack developer and BCA student with a love for turning ideas into powerful, animated web experiences. I specialize in building frontend and backend applications using JavaScript, Python, MySQL, and cutting-edge tech. From dynamic UIs to complete systems like school management and e-commerce sites, I craft modern, interactive solutions that stand out in both design and performance.
             </motion.p>
-            
-            <motion.p 
-              variants={itemVariants}
-              className="text-gray-600 dark:text-gray-300 mb-8"
+
+            <motion.p
+                variants={itemVariants}
+                className="text-gray-600 dark:text-gray-300 mb-8"
             >
-              I'm passionate about creating intuitive user experiences and implementing efficient 
-              backend systems. My recent focus has been on integrating AI capabilities into web 
-              applications to provide intelligent features that enhance user engagement and business value.
+              I'm deeply passionate about building intuitive, animated user interfaces and powerful backend systems. Lately, I’ve been exploring AI integration in web applications to add smart features that boost user experience and deliver real business value. Whether it’s a dynamic portfolio, an e-commerce platform, or a school management system — I love bringing unique, meaningful ideas to life.
             </motion.p>
-            
-            <motion.div 
-              variants={itemVariants}
-              className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8"
+
+            <motion.div
+                variants={itemVariants}
+                className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-12"
             >
               {statsItems.map((item, index) => (
-                <div key={index} className="flex flex-col items-center p-4 bg-white dark:bg-gray-700 rounded-lg shadow-md">
-                  <div className="text-blue-500 mb-2">{item.icon}</div>
-                  <div className="text-2xl font-bold text-gray-800 dark:text-white">{item.value}</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-300">{item.label}</div>
-                </div>
+                  <div
+                      key={index}
+                      className="relative overflow-hidden flex flex-col items-center p-6 rounded-2xl backdrop-blur-lg bg-white/10 dark:bg-white/5 shadow-xl border border-white/20 dark:border-white/10 transition-transform hover:scale-105 hover:shadow-2xl group"
+                      onClick={(e) => {
+                        const shine = e.currentTarget.querySelector('.click-shine');
+                        shine.classList.remove('animate-click-shine');
+                        void shine.offsetWidth; // force reflow
+                        shine.classList.add('animate-click-shine');
+                      }}
+                  >
+                    {/* Shine on click */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent translate-x-[-100%] pointer-events-none click-shine" />
+
+                    <div className="text-blue-400 mb-3 text-3xl z-10">
+                      {item.icon}
+                    </div>
+                    <div className="text-3xl font-extrabold text-white drop-shadow-md z-10">
+                      {item.value}
+                    </div>
+                    <div className="text-sm text-gray-300 mt-1 z-10">
+                      {item.label}
+                    </div>
+                  </div>
               ))}
             </motion.div>
-            
+
+
+
             <motion.div variants={itemVariants} className="flex space-x-4">
               <motion.a
-                href="/resume.pdf"
-                download
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium shadow-md hover:bg-blue-700 transition-colors duration-300 flex items-center"
+                  href="/resume.pdf"
+                  download
+                  whileHover={{ scale: 1.08 }}
+                  whileTap={{ scale: 0.96 }}
+                  className="relative px-8 py-4 backdrop-blur-md bg-blue-400/10 border border-blue-200/20 text-white rounded-2xl font-semibold shadow-xl hover:bg-blue-400/20 transition-all duration-300 ease-in-out flex items-center group overflow-hidden"
               >
-                <Download size={18} className="mr-2" /> Download Resume
+                <span className="absolute inset-0 bg-gradient-to-br from-blue-500/30 via-blue-400/20 to-blue-300/30 rounded-2xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-500"></span>
+                <Download size={20} className="mr-3 z-10 text-white" />
+                <span className="z-10">Download Resume</span>
               </motion.a>
-              
+
+
               <motion.a
-                href="https://github.com/username"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-6 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300 flex items-center"
+                  href="https://github.com/username"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.08 }}
+                  whileTap={{ scale: 0.96 }}
+                  className="relative px-8 py-4 backdrop-blur-md bg-blue-400/10 border border-blue-300/20 text-white rounded-2xl font-semibold shadow-lg hover:bg-blue-400/20 transition-all duration-300 ease-in-out flex items-center group overflow-hidden"
               >
-                <Github size={18} className="mr-2" /> GitHub Profile
+                <span className="absolute inset-0 bg-gradient-to-br from-blue-500/30 via-blue-400/20 to-blue-300/30 rounded-2xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-500"></span>
+                <Github size={20} className="mr-3 z-10 text-white" />
+                <span className="z-10">GitHub Profile</span>
               </motion.a>
+
             </motion.div>
           </motion.div>
         </div>

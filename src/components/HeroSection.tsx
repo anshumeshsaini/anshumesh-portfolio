@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDown, Mic, MicOff } from 'lucide-react';
 import { useThemeStore } from '../store/themeStore';
+import "./hero.css"
 
 const HeroSection: React.FC = () => {
   const { theme } = useThemeStore();
@@ -149,38 +150,41 @@ const HeroSection: React.FC = () => {
             <span className="w-1 h-1 rounded-full bg-gray-400" />
             <span className="text-sm text-gray-600 dark:text-gray-400">{location}</span>
           </motion.div>
-          
+
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-5xl md:text-7xl font-bold mb-6"
+              initial={{ opacity: 0, y: 40, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+              className="text-5xl md:text-7xl font-extrabold mb-8 tracking-wide text-center relative z-10"
           >
-            <span className="bg-gradient-to-r from-blue-500 to-teal-400 bg-clip-text text-transparent">
-              Anshumesh Saini
-            </span>
+  <span className="bg-gradient-to-r from-indigo-500 via-sky-400 to-emerald-400 bg-clip-text text-transparent drop-shadow-[0_1.5px_3px_rgba(0,255,255,0.7)]">
+    Anshumesh Saini
+  </span>
+            <span className="absolute -z-10 top-1/2 left-1/2 w-full h-full transform -translate-x-1/2 -translate-y-1/2 blur-2xl opacity-40 bg-gradient-to-r from-indigo-500 via-sky-400 to-emerald-400 rounded-full animate-pulse" />
           </motion.h1>
-          
+
+
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-2xl md:text-3xl font-medium text-gray-700 dark:text-gray-300 mb-8"
+              initial={{ opacity: 0, y: 30, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
+              className="text-2xl md:text-3xl font-semibold text-center mb-10 relative z-10 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-500 to-red-400 animate-text-glow"
           >
             Full-Stack Developer
+            <span className="absolute -z-10 top-1/2 left-1/2 w-full h-full transform -translate-x-1/2 -translate-y-1/2 blur-xl opacity-30 bg-gradient-to-r from-purple-400 via-pink-500 to-red-400 rounded-full animate-pulse" />
           </motion.h2>
-          
+
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mb-10"
+              initial={{ opacity: 0, y: 40, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
+              className="text-lg md:text-xl leading-relaxed text-center max-w-3xl mx-auto mb-12 px-4 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 animate-text-fade drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]"
           >
-            Crafting Next-Level Digital Experiences
-             Expert in: React, Node.js, Scalable, high-performance web applications
-             Passionate About: Innovation, animations, and futuristic UI/UX
+            Crafting <span className="font-semibold">Next-Level Digital Experiences</span><br />
+            <span className="bold">Expert in:</span> React, Mysql, scalable, high-performance web applications<br />
+            <span className="bold">Passionate About:</span> Innovation, animations, and futuristic UI/UX
           </motion.p>
-          
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -188,29 +192,43 @@ const HeroSection: React.FC = () => {
             className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6"
           >
             <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-3 bg-blue-600 text-white rounded-full font-medium shadow-lg hover:bg-blue-700 transition-colors duration-300"
+                whileHover={{ scale: 1.08, boxShadow: "0 0 20px rgba(0, 255, 255, 0.6)" }}
+                whileTap={{ scale: 0.95 }}
+                className="relative px-10 py-3 text-white bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full font-semibold shadow-xl transition-all duration-300 hover:from-blue-600 hover:to-purple-500 overflow-hidden z-10"
             >
-              View Projects
+              <span className="relative z-20"> View Projects</span>
+              <span className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-500 opacity-30 blur-xl rounded-full animate-pulse z-0" />
             </motion.button>
-            
+
+
             <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-3 border border-gray-300 dark:border-gray-700 rounded-full font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-300"
+                whileHover={{ scale: 1.08, boxShadow: "0 0 12px rgba(255,255,255,0.3)" }}
+                whileTap={{ scale: 0.95 }}
+                className="relative px-9 py-3 border border-white/30 rounded-full font-medium text-white backdrop-blur-md bg-white/5 dark:bg-white/10 text-sm shadow-md transition-all duration-300 hover:bg-white/10 hover:backdrop-blur-lg dark:hover:bg-white/20 overflow-hidden z-10"
             >
-              Contact Me
+              <span className="relative z-20">Contact Me</span>
+              <span className="absolute inset-0 rounded-full blur-xl opacity-20 bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-400 animate-glow z-0" />
             </motion.button>
-            
+
+
             <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleVoiceIntro}
-              className="p-3 border border-gray-300 dark:border-gray-700 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-300"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={handleVoiceIntro}
+                className={`relative p-4 rounded-full transition-all duration-300 
+    ${
+                    isSpeaking
+                        ? 'bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-lg animate-pulse-mic'
+                        : 'border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+                }
+  `}
             >
-              {isSpeaking ? <MicOff size={20} /> : <Mic size={20} />}
+              {isSpeaking ? <MicOff size={22} /> : <Mic size={22} />}
+              {isSpeaking && (
+                  <span className="absolute inset-0 rounded-full blur-xl bg-red-500 opacity-20 animate-mic-glow z-[-1]" />
+              )}
             </motion.button>
+
           </motion.div>
         </div>
       </div>
