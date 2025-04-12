@@ -12,8 +12,9 @@ const HomePage: React.FC = () => {
       <HeroSection />
       <AboutSection />
       <SkillsSection />
+        <ExperienceSection />
       <ProjectsSection />
-      <ExperienceSection />
+
       <TestimonialsSection />
     </div>
   );

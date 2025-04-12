@@ -134,19 +134,9 @@ const SkillsSection: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mt-20 text-center"
         >
-          <h3 className="text-2xl font-bold mb-4 text-gray-800 dark:text-white">
-            Interactive Skills Globe
-          </h3>
-          <p className="text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
-            Explore my technical skills in an interactive 3D environment. 
-            The size of each node represents my proficiency level.
-          </p>
-          
-          <div className="bg-gray-100 dark:bg-gray-800 rounded-xl p-8 h-96 flex items-center justify-center">
-            <p className="text-gray-500 dark:text-gray-400">
 
-            </p>
-          </div>
+
+
         </motion.div>
       </div>
     </section>
