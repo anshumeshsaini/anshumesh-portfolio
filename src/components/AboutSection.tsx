@@ -147,17 +147,17 @@ const AboutSection: React.FC = () => {
 
 
             <motion.div variants={itemVariants} className="flex space-x-4">
-              <motion.a
-                  href="/resume.pdf"
-                  download
-                  whileHover={{ scale: 1.08 }}
-                  whileTap={{ scale: 0.96 }}
-                  className="relative px-8 py-4 backdrop-blur-md bg-blue-400/10 border border-blue-200/20 text-white rounded-2xl font-semibold shadow-xl hover:bg-blue-400/20 transition-all duration-300 ease-in-out flex items-center group overflow-hidden"
-              >
-                <span className="absolute inset-0 bg-gradient-to-br from-blue-500/30 via-blue-400/20 to-blue-300/30 rounded-2xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-500"></span>
-                <Download size={20} className="mr-3 z-10 text-white" />
-                <span className="z-10">Download Resume</span>
-              </motion.a>
+            <motion.a
+    href="/resume.pdf"
+    download="resume.pdf" // Updated to specify the desired filename
+    whileHover={{ scale: 1.08 }}
+    whileTap={{ scale: 0.96 }}
+    className="relative px-8 py-4 backdrop-blur-md bg-blue-400/10 border border-blue-200/20 text-white rounded-2xl font-semibold shadow-xl hover:bg-blue-400/20 transition-all duration-300 ease-in-out flex items-center group overflow-hidden"
+>
+    <span className="absolute inset-0 bg-gradient-to-br from-blue-500/30 via-blue-400/20 to-blue-300/30 rounded-2xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-500"></span>
+    <Download size={20} className="mr-3 z-10 text-white" />
+    <span className="z-10">Download Resume</span>
+</motion.a>
 
 
               <motion.a

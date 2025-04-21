@@ -18,7 +18,6 @@ const skillData: Skill[] = [
   
   // Backend
   { id: '8', name: 'Node.js', icon: 'nodejs', category: 'backend', proficiency: 90 },
-  { id: '12', name: 'Microservices', icon: 'microservices', category: 'backend', proficiency: 85 },
   {
     "id": "13",
     "name": "Supabase",
@@ -35,11 +34,9 @@ const skillData: Skill[] = [
   // DevOps
   // AI/ML
   { id: '20', name: 'TensorFlow', icon: 'tensorflow', category: 'ai', proficiency: 80 },
-  { id: '21', name: 'PyTorch', icon: 'pytorch', category: 'ai', proficiency: 75 },
   { id: '22', name: 'OpenAI API', icon: 'openai', category: 'ai', proficiency: 85 },
 
   // Mobile
-  { id: '24', name: 'React Native', icon: 'reactnative', category: 'mobile', proficiency: 85 },
 ];
 
 export const useSkillStore = create<SkillState>((set) => ({
