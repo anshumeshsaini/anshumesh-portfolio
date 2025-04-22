@@ -6,17 +6,10 @@ import "./hero.css"
 
 const HeroSection: React.FC = () => {
   const { theme } = useThemeStore();
-  const [time, setTime] = useState(new Date());
-  const [weather, setWeather] = useState({ temp: '--', condition: 'Loading...' });
-  const [location, setLocation] = useState('Your Location');
   const [isListening, setIsListening] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
-
-  // Update time every minute
-
-
 
   // Canvas animation for interactive background
   useEffect(() => {
@@ -122,15 +115,7 @@ const HeroSection: React.FC = () => {
             transition={{ duration: 0.8 }}
             className="mb-4 flex items-center space-x-2"
           >
-            <span className="text-sm text-gray-600 dark:text-gray-400">
-              {time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-            </span>
             <span className="w-1 h-1 rounded-full bg-gray-400" />
-            <span className="text-sm text-gray-600 dark:text-gray-400">
-              {weather.temp} • {weather.condition}
-            </span>
-            <span className="w-1 h-1 rounded-full bg-gray-400" />
-            <span className="text-sm text-gray-600 dark:text-gray-400">{location}</span>
           </motion.div>
 
           <motion.h1

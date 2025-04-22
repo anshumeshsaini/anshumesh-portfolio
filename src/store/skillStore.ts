@@ -28,7 +28,7 @@ const skillData: Skill[] = [
 
   { id: '14', name: 'MongoDB', icon: 'MongoDB', category: 'backend', proficiency: 55 },
   // Database
-  { id: '13', name: 'MongoDB', icon: 'mongodb', category: 'database', proficiency: 90 },
+
   { id: '14', name: 'Mysql', icon: 'postgresql', category: 'database', proficiency: 85 },
 
   // DevOps
