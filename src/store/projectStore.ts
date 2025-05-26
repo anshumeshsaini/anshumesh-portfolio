@@ -167,7 +167,7 @@ const projectData: Project[] = [
     "language": "javascript"
   },
   {
-    "id": "5",
+    "id": "Fullstack",
     "title": "Aether-Commerce – AI-Enhanced E-Commerce Platform",
     "description": "A futuristic full-stack eCommerce platform blending AI with real-time user interactions, smart product discovery, and a visually immersive experience using React and Supabase.",
     "technologies": [
@@ -196,7 +196,7 @@ const projectData: Project[] = [
     "githubUrl": "https://github.com/anshumeshsaini",
     "liveUrl": "https://unique-cassata-9987b2.netlify.app/",
     "featured": true,
-    "category": "gaming",
+    "category": "Fullstack",
     "codeSnippet": "",
     "language": "javascript",
 
@@ -210,7 +210,7 @@ const projectData: Project[] = [
     "githubUrl": "https://github.com/anshumeshsaini/fileflow-alchemy-lab",
     "liveUrl": "https://filealchemy.vercel.app/",
     "featured": true,
-    "category": "utility",
+    "category": "frontend",
     "codeSnippet": "",
     "language": "typescript"
   },
@@ -223,7 +223,7 @@ const projectData: Project[] = [
     "githubUrl": "https://www.linkedin.com/posts/anshumesh-saini-628760234_reactjs-webdevelopment-carrental-activity-7300507191252283392-gal_?utm_source=share&utm_medium=member_desktop&rcm=ACoAADp8_YABlwsEpKr00be_L06qo8UW5Pz1vHw",
     "liveUrl": "https://www.linkedin.com/posts/anshumesh-saini-628760234_reactjs-webdevelopment-carrental-activity-7300507191252283392-gal_?utm_source=share&utm_medium=member_desktop&rcm=ACoAADp8_YABlwsEpKr00be_L06qo8UW5Pz1vHw",
     "featured": true,
-    "category": "react",
+    "category": "forntend",
     "codeSnippet": "",
     "language": "javascript"
   },
@@ -242,7 +242,7 @@ const projectData: Project[] = [
     "githubUrl": "https://github.com/anshumeshsaini",
     "liveUrl": "https://66f4429968357d25789e5172--lovely-baklava-faa39e.netlify.app/",
     "featured": true,
-    "category": "music",
+    "category": "forntend",
     "codeSnippet": "",
     "language": "javascript"
   },
