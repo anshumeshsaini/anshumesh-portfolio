@@ -1,9 +1,13 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Download, Github, Code, Award, Briefcase, Coffee } from 'lucide-react';
 import { useGithubStore } from '../store/githubStore';
 import anshumesh from './anshumesh.jpeg'
 import './about.css'
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Particles from 'react-tsparticles';
+import { loadFull } from 'tsparticles';
 
 const AboutSection: React.FC = () => {
   const { stats, fetchStats } = useGithubStore();
@@ -41,6 +45,25 @@ const AboutSection: React.FC = () => {
       transition: { duration: 0.6 },
     },
   };
+
+  // coffee drop animation refs & state
+  const cupRef = useRef<HTMLDivElement>(null);
+  const [impact, setImpact] = useState(false);
+  const particlesInit = useCallback(async engine => { await loadFull(engine); }, []);
+  // gsap timeline for cup drop
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: cupRef.current,
+        start: 'top 80%',
+        toggleActions: 'play none none none'
+      }
+    });
+    tl.from(cupRef.current, { y: -300, rotation: 15, ease: 'bounce.out', duration: 1 })
+      .to(cupRef.current, { rotation: -5, duration: 0.2, yoyo: true, repeat: 1 })
+      .to(cupRef.current, { rotation: 0, duration: 0.2, onComplete: () => setImpact(true) });
+  }, []);
 
   return (
     <section id="about" className="py-20 bg-gray-50 dark:bg-gray-800">
@@ -212,6 +235,29 @@ const AboutSection: React.FC = () => {
             </div>
           </div>
         </motion.div>
+        {/* coffee drop animation */}
+        <div ref={cupRef} className="mx-auto mt-12 w-24 h-24 relative">
+          <Coffee size={96} className="text-yellow-600 z-10" />
+          {impact && (
+            <Particles
+              id="coffee-splash"
+              init={particlesInit}
+              options={{
+                fpsLimit: 60,
+                particles: {
+                  number: { value: 25 },
+                  color: { value: '#6f4e37' },
+                  shape: { type: 'circle' },
+                  opacity: { value: 0.8 },
+                  size: { value: { min: 2, max: 5 } },
+                  move: { direction: 'top', speed: 4, outModes: { default: 'destroy' } }
+                },
+                emitters: { position: { x: 50, y: 100 }, rate: { quantity: 25, delay: 0 } }
+              }}
+              className="absolute inset-0"
+            />
+          )}
+        </div>
       </div>
     </section>
   );
