@@ -25,7 +25,7 @@ const projectData: Project[] = [
     ],
     "image": "https://images.unsplash.com/photo-1608889825205-eebdb9fc5806?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cm9jayUyMHBhcGVyJTIwc2Npc3NvcnN8ZW58MHx8MHx8fDA%3D",
     "githubUrl": "https://github.com/anshumeshsaini/Neural-Combat.git",
-    "liveUrl": "https://gesture-fight.vercel.app/",
+    "liveUrl": "https://gesture-fights.vercel.app/",
     "featured": true,
     "category": "ai",
     "codeSnippet": "",
