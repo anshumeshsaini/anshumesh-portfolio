@@ -1,263 +1,509 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { Download, Github, Code, Award, Briefcase, Coffee } from 'lucide-react';
+import { motion, useAnimation, useInView } from 'framer-motion';
+import { Download, Github, Code, Award, Briefcase, Coffee, Sparkles, Cpu, Database, Server, Terminal } from 'lucide-react';
 import { useGithubStore } from '../store/githubStore';
-import anshumesh from './anshumesh.jpeg'
-import './about.css'
+import anshumesh from './anshumesh.jpeg';
+import './about.css';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Particles from 'react-tsparticles';
 import { loadFull } from 'tsparticles';
+import { useThemeStore } from '../store/themeStore';
 
 const AboutSection: React.FC = () => {
   const { stats, fetchStats } = useGithubStore();
+  const { theme } = useThemeStore();
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px 0px" });
+  const controls = useAnimation();
+  const sectionRef = useRef<HTMLDivElement>(null);
   
+  // Coffee drop animation refs & state
+  const cupRef = useRef<HTMLDivElement>(null);
+  const [impact, setImpact] = useState(false);
+  const [hoveredStat, setHoveredStat] = useState<number | null>(null);
+  
+  // Initialize particles
+  const particlesInit = useCallback(async engine => { 
+    await loadFull(engine); 
+  }, []);
+
+  // Fetch stats when in view
   useEffect(() => {
     if (isInView) {
       fetchStats();
+      controls.start("visible");
     }
-  }, [isInView, fetchStats]);
+  }, [isInView, fetchStats, controls]);
 
+  // Enhanced stats items with more metrics
   const statsItems = [
-
-    { icon: <Github size={24} />, value: `${stats.publicRepos}+`, label: 'GitHub Repos' },
-    { icon: <Briefcase size={24} />, value: '90+', label: 'Projects Completed' },
-    { icon: <Coffee size={24} />, value: '∞', label: 'Coffee Cups' },
+    { 
+      icon: <Github size={28} />, 
+      value: `${stats.publicRepos}+`, 
+      label: 'GitHub Repos',
+      color: 'from-purple-500 to-pink-500'
+    },
+    { 
+      icon: <Briefcase size={28} />, 
+      value: '40+', 
+      label: 'Projects',
+      color: 'from-blue-500 to-cyan-400'
+    },
+    { 
+      icon: <Coffee size={28} />, 
+      value: '∞', 
+      label: 'Coffee',
+      color: 'from-amber-500 to-orange-500'
+    },
+    { 
+      icon: <Terminal size={28} />, 
+      value: '10K+', 
+      label: 'Code Hours',
+      color: 'from-emerald-500 to-teal-400'
+    },
+    
+    
   ];
 
+  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
+        staggerChildren: 0.15,
+        delayChildren: 0.3
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6 },
+      transition: { 
+        duration: 0.8,
+        ease: [0.2, 0.8, 0.4, 1]
+      },
     },
   };
 
-  // coffee drop animation refs & state
-  const cupRef = useRef<HTMLDivElement>(null);
-  const [impact, setImpact] = useState(false);
-  const particlesInit = useCallback(async engine => { await loadFull(engine); }, []);
-  // gsap timeline for cup drop
+  // GSAP animations for coffee cup
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
+    
+    // Coffee cup drop animation
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: cupRef.current,
         start: 'top 80%',
-        toggleActions: 'play none none none'
+        toggleActions: 'play none none none',
+        markers: false
       }
     });
-    tl.from(cupRef.current, { y: -300, rotation: 15, ease: 'bounce.out', duration: 1 })
-      .to(cupRef.current, { rotation: -5, duration: 0.2, yoyo: true, repeat: 1 })
-      .to(cupRef.current, { rotation: 0, duration: 0.2, onComplete: () => setImpact(true) });
+    
+    tl.from(cupRef.current, { 
+      y: -300, 
+      rotation: 15, 
+      ease: 'bounce.out', 
+      duration: 1.2 
+    })
+    .to(cupRef.current, { 
+      rotation: -5, 
+      duration: 0.3, 
+      yoyo: true, 
+      repeat: 1 
+    })
+    .to(cupRef.current, { 
+      rotation: 0, 
+      duration: 0.3, 
+      onComplete: () => setImpact(true) 
+    });
+
+    // Floating tech icons animation
+    const techIcons = gsap.utils.toArray('.tech-icon');
+    techIcons.forEach((icon: any, i) => {
+      gsap.from(icon, {
+        y: 50,
+        opacity: 0,
+        duration: 0.8,
+        delay: i * 0.1,
+        scrollTrigger: {
+          trigger: icon,
+          start: 'top 90%',
+          toggleActions: 'play none none none'
+        }
+      });
+    });
+
+    // Background gradient animation
+    if (sectionRef.current) {
+      gsap.to(sectionRef.current, {
+        backgroundPosition: '50% 70%',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true
+        }
+      });
+    }
   }, []);
 
   return (
-    <section id="about" className="py-20 bg-gray-50 dark:bg-gray-800">
-      <div className="container mx-auto px-6">
+    <section 
+      id="about" 
+      ref={sectionRef}
+      className="relative py-28 overflow-hidden"
+      style={{
+        background: theme.isDark 
+          ? 'radial-gradient(circle at 50% 50%, rgba(17, 24, 39, 0.8) 0%, rgba(3, 7, 18, 1) 70%)' 
+          : 'radial-gradient(circle at 50% 50%, rgba(249, 250, 251, 0.9) 0%, rgba(229, 231, 235, 1) 70%)'
+      }}
+    >
+      {/* Floating tech icons */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {['React', 'NextJS', 'Node', 'Python', 'MySQL', 'MongoDB', 'TensorFlow', 'Docker'].map((tech, i) => (
+          <div 
+            key={i}
+            className="tech-icon absolute text-gray-400 dark:text-gray-600 flex flex-col items-center"
+            style={{
+              left: `${Math.random() * 90 + 5}%`,
+              top: `${Math.random() * 80 + 10}%`,
+              transform: `rotate(${Math.random() * 360}deg)`
+            }}
+          >
+            <Code size={20} />
+            <span className="text-xs mt-1 opacity-70">{tech}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Particle background */}
+      <div className="absolute inset-0 z-0 opacity-20 dark:opacity-30">
+        <Particles
+          id="about-particles"
+          init={particlesInit}
+          options={{
+            fpsLimit: 60,
+            interactivity: {
+              events: {
+                onHover: {
+                  enable: true,
+                  mode: "repulse",
+                },
+              },
+              modes: {
+                repulse: {
+                  distance: 100,
+                  duration: 0.4,
+                },
+              },
+            },
+            particles: {
+              color: {
+                value: theme.isDark ? "#3b82f6" : "#2563eb",
+              },
+              links: {
+                color: theme.isDark ? "#3b82f6" : "#2563eb",
+                distance: 150,
+                enable: true,
+                opacity: 0.3,
+                width: 1,
+              },
+              move: {
+                direction: "none",
+                enable: true,
+                outModes: {
+                  default: "bounce",
+                },
+                random: false,
+                speed: 1,
+                straight: false,
+              },
+              number: {
+                density: {
+                  enable: true,
+                  area: 800,
+                },
+                value: 80,
+              },
+              opacity: {
+                value: 0.3,
+              },
+              shape: {
+                type: "circle",
+              },
+              size: {
+                value: { min: 1, max: 3 },
+              },
+            },
+            detectRetina: true,
+          }}
+        />
+      </div>
+
+      <div className="container mx-auto px-6 relative z-10">
+        {/* Section header with animated sparkles */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px 0px" }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-800 dark:text-white">
-            About Me
+          <div className="inline-flex items-center mb-4">
+
+            <span className="text-sm font-medium bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-orange-500">
+              MY JOURNEY
+            </span>
+
+          </div>
+          
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900 dark:text-white">
+            About <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400">Me</span>
           </h2>
-          <div className="w-20 h-1 bg-blue-500 mx-auto mb-6"></div>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Passionate about creating innovative solutions that solve real-world problems.
+          
+          <motion.div
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="w-32 h-1.5 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full mx-auto mb-8"
+            style={{ originX: 0 }}
+          />
+          
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            Crafting <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500">digital experiences</span> that blend innovation with intuitive design
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        {/* Main content grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          {/* Image with floating effect */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px 0px" }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8 }}
+            className="relative"
           >
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-tr from-blue-500 to-teal-400 transform rotate-6 rounded-2xl"></div>
-              <img
-                src={anshumesh}
-                alt="Anshumesh Saini"
-                className="relative z-10 rounded-2xl shadow-xl"
-              />
-              
-              <div className="absolute -bottom-6 -right-6 bg-white dark:bg-gray-900 p-4 rounded-lg shadow-lg z-20">
-                <div className="flex items-center space-x-2">
-                  <Github className="text-gray-700 dark:text-gray-300" size={20} />
-                  <span className="font-medium text-gray-800 dark:text-gray-200">{stats.followers} Followers</span>
+            <div className="relative group">
+              {/* Floating container */}
+              <motion.div
+                
+                
+                className="relative z-10"
+              >
+                {/* Gradient border */}
+                <div className="" />
+                
+                {/* Image with shine effect */}
+                <div className="relative overflow-hidden rounded-3xl shadow-2xl z-20">
+                  <img
+                    src={anshumesh}
+                    alt="Anshumesh Saini"
+                    className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                 </div>
-              </div>
+              </motion.div>
+              
+              {/* GitHub followers badge */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.5 }}
+                className="absolute -bottom-6 -right-6 backdrop-blur-lg bg-white/80 dark:bg-gray-900/90 p-4 rounded-xl shadow-xl z-30 border border-white/20 dark:border-gray-700"
+              >
+                <div className="flex items-center space-x-3">
+                  <Github className="text-gray-800 dark:text-gray-200" size={24} />
+                  <div>
+                    <div className="text-lg font-bold text-gray-900 dark:text-white">{stats.followers}</div>
+                    <div className="text-xs text-gray-600 dark:text-gray-400">GitHub Followers</div>
+                  </div>
+                </div>
+              </motion.div>
+              
+              {/* Floating tech badges */}
+              
             </div>
           </motion.div>
 
+          {/* Text content */}
           <motion.div
             ref={ref}
             initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
+            animate={controls}
             variants={containerVariants}
+            className="relative"
           >
+            {/* Glowing background element */}
+            <div className="absolute -top-20 -left-20 w-64 h-64 rounded-full bg-blue-500/10 blur-3xl -z-10" />
+            
             <motion.h3
-                variants={itemVariants}
-                className="text-3xl md:text-4xl font-extrabold mb-6 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent tracking-wide animate-glow-title"
+              variants={itemVariants}
+              className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-8 tracking-tight"
             >
-               Full-Stack Developer
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">
+                Full-Stack Developer
+              </span>
+              <span className="block text-2xl md:text-3xl mt-2 text-gray-700 dark:text-gray-300 font-medium">
+                & AI Enthusiast
+              </span>
             </motion.h3>
 
-
             <motion.p
-                variants={itemVariants}
-                className="text-gray-600 dark:text-gray-300 mb-6"
+              variants={itemVariants}
+              className="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed"
             >
-              I'm Anshumesh Saini — a passionate full-stack developer and BCA student with a love for turning ideas into powerful, animated web experiences. I specialize in building frontend and backend applications using JavaScript, Python, MySQL, and cutting-edge tech. From dynamic UIs to complete systems like school management and e-commerce sites, I craft modern, interactive solutions that stand out in both design and performance.
+              I'm <span className="font-semibold text-gray-800 dark:text-white">Anshumesh Saini</span>  a passionate full-stack developer specializing in building immersive web experiences with cutting-edge technologies. With expertise in JavaScript, Python, and modern frameworks, I create solutions that are as performant as they are beautiful.
             </motion.p>
 
             <motion.p
-                variants={itemVariants}
-                className="text-gray-600 dark:text-gray-300 mb-8"
+              variants={itemVariants}
+              className="text-lg text-gray-600 dark:text-gray-300 mb-10 leading-relaxed"
             >
-              I'm deeply passionate about building intuitive, animated user interfaces and powerful backend systems. Lately, I’ve been exploring AI integration in web applications to add smart features that boost user experience and deliver real business value. Whether it’s a dynamic portfolio, an e-commerce platform, or a school management system — I love bringing unique, meaningful ideas to life.
+              My work spans from dynamic UIs to robust backend systems, with a recent focus on AI integration to deliver smart, intuitive applications. Whether it's a portfolio, e-commerce platform, or complex management system, I approach each project with creativity and technical excellence.
             </motion.p>
 
+            {/* Stats grid with hover effects */}
             <motion.div
-                variants={itemVariants}
-                className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-12"
+              variants={itemVariants}
+              className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-12"
             >
               {statsItems.map((item, index) => (
-                  <div
-                      key={index}
-                      className="relative overflow-hidden flex flex-col items-center p-6 rounded-2xl backdrop-blur-lg bg-white/10 dark:bg-white/5 shadow-xl border border-white/20 dark:border-white/10 transition-transform hover:scale-105 hover:shadow-2xl group"
-                      onClick={(e) => {
-                        const shine = e.currentTarget.querySelector('.click-shine');
-                        shine.classList.remove('animate-click-shine');
-                        void shine.offsetWidth; // force reflow
-                        shine.classList.add('animate-click-shine');
-                      }}
-                  >
-                    {/* Shine on click */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent translate-x-[-100%] pointer-events-none click-shine" />
-
-                    <div className="text-blue-400 mb-3 text-3xl z-10">
+                <motion.div
+                  key={index}
+                  whileHover={{ 
+                    y: -5,
+                    transition: { duration: 0.3 }
+                  }}
+                  onHoverStart={() => setHoveredStat(index)}
+                  onHoverEnd={() => setHoveredStat(null)}
+                  className="relative overflow-hidden"
+                >
+                  <div className={`h-full p-5 rounded-xl backdrop-blur-lg bg-white/10 dark:bg-white/5 border border-white/10 dark:border-white/10 shadow-sm transition-all duration-300 ${
+                    hoveredStat === index ? 'shadow-lg scale-105' : ''
+                  }`}>
+                    <div className={`text-4xl mb-3 transition-all duration-500 ${
+                      hoveredStat === index ? `text-transparent bg-clip-text bg-gradient-to-r ${item.color}` : 'text-gray-400 dark:text-gray-500'
+                    }`}>
                       {item.icon}
                     </div>
-                    <div className="text-3xl font-extrabold text-white drop-shadow-md z-10">
+                    <div className="text-3xl font-bold text-gray-900 dark:text-white mb-1">
                       {item.value}
                     </div>
-                    <div className="text-sm text-gray-300 mt-1 z-10">
+                    <div className="text-sm text-gray-600 dark:text-gray-400">
                       {item.label}
                     </div>
+                    
+                    {/* Hover effect */}
+                    {hoveredStat === index && (
+                      <div className={`absolute inset-0 rounded-xl opacity-20 bg-gradient-to-br ${item.color} -z-10`} />
+                    )}
                   </div>
+                </motion.div>
               ))}
             </motion.div>
 
-
-
-            <motion.div variants={itemVariants} className="flex space-x-4">
-            <motion.a
-    href="/resume.pdf"
-    download="resume.pdf" // Updated to specify the desired filename
-    whileHover={{ scale: 1.08 }}
-    whileTap={{ scale: 0.96 }}
-    className="relative px-8 py-4 backdrop-blur-md bg-blue-400/10 border border-blue-200/20 text-white rounded-2xl font-semibold shadow-xl hover:bg-blue-400/20 transition-all duration-300 ease-in-out flex items-center group overflow-hidden"
->
-    <span className="absolute inset-0 bg-gradient-to-br from-blue-500/30 via-blue-400/20 to-blue-300/30 rounded-2xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-500"></span>
-    <Download size={20} className="mr-3 z-10 text-white" />
-    <span className="z-10">Download Resume</span>
-</motion.a>
-
-
+            {/* Action buttons */}
+            <motion.div 
+              variants={itemVariants}
+              className="flex flex-wrap gap-4"
+            >
               <motion.a
-                  href="https://github.com/username"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.08 }}
-                  whileTap={{ scale: 0.96 }}
-                  className="relative px-8 py-4 backdrop-blur-md bg-blue-400/10 border border-blue-300/20 text-white rounded-2xl font-semibold shadow-lg hover:bg-blue-400/20 transition-all duration-300 ease-in-out flex items-center group overflow-hidden"
+                href="/resume.pdf"
+                download="Anshumesh_Saini_Resume.pdf"
+                whileHover={{ 
+                  scale: 1.05,
+                  boxShadow: "0 5px 20px rgba(59, 130, 246, 0.4)"
+                }}
+                whileTap={{ scale: 0.95 }}
+                className="relative px-8 py-4 rounded-xl font-semibold text-white overflow-hidden group"
               >
-                <span className="absolute inset-0 bg-gradient-to-br from-blue-500/30 via-blue-400/20 to-blue-300/30 rounded-2xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-500"></span>
-                <Github size={20} className="mr-3 z-10 text-white" />
-                <span className="z-10">GitHub Profile</span>
+                <span className="absolute inset-0 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl transition-all duration-300 group-hover:from-blue-600 group-hover:to-purple-500" />
+                <span className="absolute inset-0 bg-gradient-to-r from-blue-400 to-blue-500 opacity-0 group-hover:opacity-30 blur-xl transition-opacity duration-500" />
+                <span className="relative z-10 flex items-center">
+                  <Download size={20} className="mr-3" />
+                  Download Resume
+                </span>
               </motion.a>
 
+              <motion.a
+                href="https://github.com/username"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ 
+                  scale: 1.05,
+                  boxShadow: "0 5px 20px rgba(139, 92, 246, 0.3)"
+                }}
+                whileTap={{ scale: 0.95 }}
+                className="relative px-8 py-4 rounded-xl font-semibold text-white overflow-hidden group"
+              >
+                <span className="absolute inset-0 backdrop-blur-md bg-white/5 dark:bg-white/10 rounded-xl border border-white/20 dark:border-white/10 transition-all duration-300 group-hover:bg-white/20" />
+                <span className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500" />
+                <span className="relative z-10 flex items-center">
+                  <Github size={20} className="mr-3" />
+                  GitHub Profile
+                </span>
+              </motion.a>
             </motion.div>
           </motion.div>
         </div>
-        
-        {/* Language Distribution */}
+
+        {/* Skills section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px 0px" }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-20"
+          className="mt-28"
         >
-          <h3 className="text-2xl font-bold mb-6 text-center text-gray-800 dark:text-white">
-            Programming Languages
-          </h3>
+          <div className="text-center mb-12">
+            <h3 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
+              My <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400">Skills</span>
+            </h3>
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              Technologies I work with to bring ideas to life
+            </p>
+          </div>
           
-          <div className="bg-white dark:bg-gray-700 rounded-xl shadow-lg p-6">
-            <div className="space-y-4">
-              {stats.topLanguages.map((lang, index) => (
-                <div key={index}>
-                  <div className="flex justify-between mb-1">
-                    <span className="text-gray-700 dark:text-gray-300 font-medium">{lang.name}</span>
-                    <span className="text-gray-600 dark:text-gray-400">{lang.percentage}%</span>
-                  </div>
-                  <div className="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2.5">
-                    <motion.div
-                      className="h-2.5 rounded-full bg-gradient-to-r from-blue-500 to-teal-400"
-                      style={{ width: `${lang.percentage}%` }}
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${lang.percentage}%` }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 1, delay: 0.2 * index }}
-                    ></motion.div>
-                  </div>
+          <div className="backdrop-blur-lg bg-white/50 dark:bg-gray-800/50 rounded-2xl shadow-xl p-8 border border-white/20 dark:border-gray-700">
+            {stats.topLanguages.map((lang, index) => (
+              <div key={index} className="mb-6 last:mb-0">
+                <div className="flex justify-between mb-3">
+                  <span className="font-medium text-gray-900 dark:text-gray-200 flex items-center">
+                    <span className="w-2 h-2 rounded-full bg-blue-500 mr-2" />
+                    {lang.name}
+                  </span>
+                  <span className="text-gray-600 dark:text-gray-400">{lang.percentage}%</span>
                 </div>
-              ))}
-            </div>
+                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
+                  <motion.div
+                    className="h-full rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 relative"
+                    initial={{ width: 0 }}
+                    whileInView={{ width: `${lang.percentage}%` }}
+                    viewport={{ once: true }}
+                    transition={{ 
+                      duration: 1.5, 
+                      delay: 0.1 * index,
+                      ease: "anticipate"
+                    }}
+                  >
+                    <div className="absolute inset-0 bg-white/20 animate-pulse-short" />
+                  </motion.div>
+                </div>
+              </div>
+            ))}
           </div>
         </motion.div>
-        {/* coffee drop animation */}
-        <div ref={cupRef} className="mx-auto mt-12 w-24 h-24 relative">
-          <Coffee size={96} className="text-yellow-600 z-10" />
-          {impact && (
-            <Particles
-              id="coffee-splash"
-              init={particlesInit}
-              options={{
-                fpsLimit: 60,
-                particles: {
-                  number: { value: 25 },
-                  color: { value: '#6f4e37' },
-                  shape: { type: 'circle' },
-                  opacity: { value: 0.8 },
-                  size: { value: { min: 2, max: 5 } },
-                  move: { direction: 'top', speed: 4, outModes: { default: 'destroy' } }
-                },
-                emitters: { position: { x: 50, y: 100 }, rate: { quantity: 25, delay: 0 } }
-              }}
-              className="absolute inset-0"
-            />
-          )}
-        </div>
+
+        {/* Coffee cup animation */}
+       
       </div>
     </section>
   );

@@ -1,5 +1,7 @@
 import { create } from 'zustand';
 import { Experience } from '../types';
+import cyberonites from './cyberonites.png';
+
 
 interface ExperienceState {
   experiences: Experience[];
@@ -13,7 +15,7 @@ const experienceData: Experience[] = [
     "duration": "December 2024 - April 2025",
     "description": "Developing and maintaining web applications with a focus on performance and security. Implementing modern UI/UX designs and enhancing website interactivity.",
     "technologies": ["HTML", "CSS", "JavaScript", "React", "Node.js", "MongoDB"],
-    "logo": "https://media.licdn.com/dms/image/v2/C5603AQHf63mFXHbhow/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1662801204288?e=2147483647&v=beta&t=7NOTCkmoTbbu8mw5ugV1HkxPc3-yEpVDIKMlDr7Lf8U"
+    "logo": cyberonites
   },
   {
     "id": "2",
