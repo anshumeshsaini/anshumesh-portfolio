@@ -5,7 +5,7 @@ import { useThemeStore } from '../store/themeStore';
 import { useNavigate } from 'react-router-dom';
 import Lottie from 'lottie-react';
 import animationData from './Code.json';
-import "./hero.css";
+import "../css/hero.css";
 
 const HeroSection: React.FC = () => {
   const { theme } = useThemeStore();

@@ -2,13 +2,14 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { motion, useAnimation, useInView } from 'framer-motion';
 import { Download, Github, Code, Award, Briefcase, Coffee, Sparkles, Cpu, Database, Server, Terminal } from 'lucide-react';
 import { useGithubStore } from '../store/githubStore';
-import anshumesh from './anshumesh.jpeg';
-import './about.css';
+import anshumesh from '../assets/anshumesh.jpeg';
+import '../css/about.css';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Particles from 'react-tsparticles';
 import { loadFull } from 'tsparticles';
 import { useThemeStore } from '../store/themeStore';
+import { Lens } from './lens';
 
 const AboutSection: React.FC = () => {
   const { stats, fetchStats } = useGithubStore();

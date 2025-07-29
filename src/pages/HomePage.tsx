@@ -5,6 +5,7 @@ import SkillsSection from '../components/SkillsSection';
 import ProjectsSection from '../components/ProjectsSection';
 import ExperienceSection from '../components/ExperienceSection';
 import TestimonialsSection from '../components/TestimonialsSection';
+import SmokeyCursor from '../components/smokey-cursor';
 
 const HomePage: React.FC = () => {
   return (
@@ -14,7 +15,14 @@ const HomePage: React.FC = () => {
       <SkillsSection />
         <ExperienceSection />
       <ProjectsSection />
-
+      <SmokeyCursor
+      simulationResolution={256}
+      dyeResolution={2048}
+      densityDissipation={2}
+      curl={5}
+      splatForce={8000}
+      enableShading={true}
+    />
       <TestimonialsSection />
     </div>
   );

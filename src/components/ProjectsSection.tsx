@@ -10,6 +10,7 @@ import 'prismjs/components/prism-jsx';
 import 'prismjs/components/prism-tsx';
 import 'prismjs/components/prism-python';
 import 'prismjs/components/prism-solidity';
+import {Lens} from './lens';
 
 const ProjectsSection: React.FC = () => {
   const { projects, filteredProjects, activeFilter, setFilter } = useProjectStore();
@@ -157,11 +158,9 @@ const ProjectsSection: React.FC = () => {
                 >
                   {/* Project Image with Gradient Overlay */}
                   <div className="relative overflow-hidden h-56">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
-                    />
+                  <Lens zoomFactor={2} lensSize={150}>
+  <img src={project.image} alt="project.title"  className="h-full bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl border border-gray-100 dark:border-gray-700 transition-all duration-300 flex flex-col"/>
+</Lens>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end">
                       <div className="p-5 w-full">
                         <span className="px-3 py-1.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs rounded-full inline-flex items-center">
