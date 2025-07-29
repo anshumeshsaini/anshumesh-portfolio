@@ -267,7 +267,7 @@ const HeroSection: React.FC = () => {
   }}
   className="text-5xl md:text-7xl lg:text-8xl font-extrabold mb-6 tracking-tight relative z-10"
 >
-  <span className="text-white">
+  <span className={theme.isDark ? "text-white" : "text-black"}>
     Anshumesh Saini
   </span>
   <span className="absolute -z-10 top-1/2 left-0 w-full h-[120%] transform -translate-y-1/2 blur-3xl opacity-30 bg-gradient-to-r from-indigo-500 via-sky-400 to-emerald-400 rounded-full animate-pulse" />
