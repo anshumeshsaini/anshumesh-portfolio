@@ -63,8 +63,6 @@ const AboutSection: React.FC = () => {
       label: 'Code Hours',
       color: 'from-emerald-500 to-teal-400'
     },
-    
-    
   ];
 
   // Animation variants
@@ -157,7 +155,7 @@ const AboutSection: React.FC = () => {
     <section 
       id="about" 
       ref={sectionRef}
-      className="relative py-28 overflow-hidden"
+      className="relative py-28 overflow-hidden transition-colors duration-300"
       style={{
         background: theme.isDark 
           ? 'radial-gradient(circle at 50% 50%, rgba(17, 24, 39, 0.8) 0%, rgba(3, 7, 18, 1) 70%)' 
@@ -169,15 +167,17 @@ const AboutSection: React.FC = () => {
         {['React', 'NextJS', 'Node', 'Python', 'MySQL', 'MongoDB', 'TensorFlow', 'Docker'].map((tech, i) => (
           <div 
             key={i}
-            className="tech-icon absolute text-gray-400 dark:text-gray-600 flex flex-col items-center"
+            className="tech-icon absolute flex flex-col items-center"
             style={{
               left: `${Math.random() * 90 + 5}%`,
               top: `${Math.random() * 80 + 10}%`,
               transform: `rotate(${Math.random() * 360}deg)`
             }}
           >
-            <Code size={20} />
-            <span className="text-xs mt-1 opacity-70">{tech}</span>
+            <Code size={20} className={theme.isDark ? "text-gray-400" : "text-gray-500"} />
+            <span className={`text-xs mt-1 ${theme.isDark ? "text-gray-400 opacity-70" : "text-gray-500 opacity-70"}`}>
+              {tech}
+            </span>
           </div>
         ))}
       </div>
@@ -256,14 +256,12 @@ const AboutSection: React.FC = () => {
           className="text-center mb-20"
         >
           <div className="inline-flex items-center mb-4">
-
             <span className="text-sm font-medium bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-orange-500">
               MY JOURNEY
             </span>
-
           </div>
           
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900 dark:text-white">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 dark:text-white text-gray-900">
             About <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400">Me</span>
           </h2>
           
@@ -276,7 +274,7 @@ const AboutSection: React.FC = () => {
             style={{ originX: 0 }}
           />
           
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl dark:text-gray-300 text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Crafting <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500">digital experiences</span> that blend innovation with intuitive design
           </p>
         </motion.div>
@@ -292,16 +290,7 @@ const AboutSection: React.FC = () => {
             className="relative"
           >
             <div className="relative group">
-              {/* Floating container */}
-              <motion.div
-                
-                
-                className="relative z-10"
-              >
-                {/* Gradient border */}
-                <div className="" />
-                
-                {/* Image with shine effect */}
+              <motion.div className="relative z-10">
                 <div className="relative overflow-hidden rounded-3xl shadow-2xl z-20">
                   <img
                     src={anshumesh}
@@ -318,19 +307,16 @@ const AboutSection: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.5 }}
-                className="absolute -bottom-6 -right-6 backdrop-blur-lg bg-white/80 dark:bg-gray-900/90 p-4 rounded-xl shadow-xl z-30 border border-white/20 dark:border-gray-700"
+                className="absolute -bottom-6 -right-6 backdrop-blur-lg dark:bg-gray-900/90 bg-white/80 p-4 rounded-xl shadow-xl z-30 border dark:border-gray-700 border-gray-200"
               >
                 <div className="flex items-center space-x-3">
-                  <Github className="text-gray-800 dark:text-gray-200" size={24} />
+                  <Github className="dark:text-gray-200 text-gray-800" size={24} />
                   <div>
-                    <div className="text-lg font-bold text-gray-900 dark:text-white">{stats.followers}</div>
-                    <div className="text-xs text-gray-600 dark:text-gray-400">GitHub Followers</div>
+                    <div className="text-lg font-bold dark:text-white text-gray-900">{stats.followers}</div>
+                    <div className="text-xs dark:text-gray-400 text-gray-600">GitHub Followers</div>
                   </div>
                 </div>
               </motion.div>
-              
-              {/* Floating tech badges */}
-              
             </div>
           </motion.div>
 
@@ -352,21 +338,21 @@ const AboutSection: React.FC = () => {
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">
                 Full-Stack Developer
               </span>
-              <span className="block text-2xl md:text-3xl mt-2 text-gray-700 dark:text-gray-300 font-medium">
+              <span className="block text-2xl md:text-3xl mt-2 dark:text-gray-300 text-gray-700 font-medium">
                 & AI Enthusiast
               </span>
             </motion.h3>
 
             <motion.p
               variants={itemVariants}
-              className="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed"
+              className="text-lg dark:text-gray-300 text-gray-600 mb-6 leading-relaxed"
             >
-              I'm <span className="font-semibold text-gray-800 dark:text-white">Anshumesh Saini</span>  a passionate full-stack developer specializing in building immersive web experiences with cutting-edge technologies. With expertise in JavaScript, Python, and modern frameworks, I create solutions that are as performant as they are beautiful.
+              I'm <span className="font-semibold dark:text-white text-gray-800">Anshumesh Saini</span> a passionate full-stack developer specializing in building immersive web experiences with cutting-edge technologies. With expertise in JavaScript, Python, and modern frameworks, I create solutions that are as performant as they are beautiful.
             </motion.p>
 
             <motion.p
               variants={itemVariants}
-              className="text-lg text-gray-600 dark:text-gray-300 mb-10 leading-relaxed"
+              className="text-lg dark:text-gray-300 text-gray-600 mb-10 leading-relaxed"
             >
               My work spans from dynamic UIs to robust backend systems, with a recent focus on AI integration to deliver smart, intuitive applications. Whether it's a portfolio, e-commerce platform, or complex management system, I approach each project with creativity and technical excellence.
             </motion.p>
@@ -387,18 +373,18 @@ const AboutSection: React.FC = () => {
                   onHoverEnd={() => setHoveredStat(null)}
                   className="relative overflow-hidden"
                 >
-                  <div className={`h-full p-5 rounded-xl backdrop-blur-lg bg-white/10 dark:bg-white/5 border border-white/10 dark:border-white/10 shadow-sm transition-all duration-300 ${
+                  <div className={`h-full p-5 rounded-xl backdrop-blur-lg dark:bg-white/5 bg-gray-100/80 border dark:border-white/10 border-gray-200 shadow-sm transition-all duration-300 ${
                     hoveredStat === index ? 'shadow-lg scale-105' : ''
                   }`}>
                     <div className={`text-4xl mb-3 transition-all duration-500 ${
-                      hoveredStat === index ? `text-transparent bg-clip-text bg-gradient-to-r ${item.color}` : 'text-gray-400 dark:text-gray-500'
+                      hoveredStat === index ? `text-transparent bg-clip-text bg-gradient-to-r ${item.color}` : 'dark:text-gray-500 text-gray-400'
                     }`}>
                       {item.icon}
                     </div>
-                    <div className="text-3xl font-bold text-gray-900 dark:text-white mb-1">
+                    <div className="text-3xl font-bold dark:text-white text-gray-900 mb-1">
                       {item.value}
                     </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">
+                    <div className="text-sm dark:text-gray-400 text-gray-600">
                       {item.label}
                     </div>
                     
@@ -443,9 +429,9 @@ const AboutSection: React.FC = () => {
                   boxShadow: "0 5px 20px rgba(139, 92, 246, 0.3)"
                 }}
                 whileTap={{ scale: 0.95 }}
-                className="relative px-8 py-4 rounded-xl font-semibold text-white overflow-hidden group"
+                className="relative px-8 py-4 rounded-xl font-semibold dark:text-white text-gray-900 overflow-hidden group"
               >
-                <span className="absolute inset-0 backdrop-blur-md bg-white/5 dark:bg-white/10 rounded-xl border border-white/20 dark:border-white/10 transition-all duration-300 group-hover:bg-white/20" />
+                <span className="absolute inset-0 backdrop-blur-md dark:bg-white/10 bg-white/50 rounded-xl border dark:border-white/10 border-gray-300 transition-all duration-300 group-hover:dark:bg-white/20 group-hover:bg-gray-200/50" />
                 <span className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500" />
                 <span className="relative z-10 flex items-center">
                   <Github size={20} className="mr-3" />
@@ -465,25 +451,25 @@ const AboutSection: React.FC = () => {
           className="mt-28"
         >
           <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
+            <h3 className="text-3xl font-bold mb-4 dark:text-white text-gray-900">
               My <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400">Skills</span>
             </h3>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            <p className="text-lg dark:text-gray-300 text-gray-600 max-w-2xl mx-auto">
               Technologies I work with to bring ideas to life
             </p>
           </div>
           
-          <div className="backdrop-blur-lg bg-white/50 dark:bg-gray-800/50 rounded-2xl shadow-xl p-8 border border-white/20 dark:border-gray-700">
+          <div className="backdrop-blur-lg dark:bg-gray-800/50 bg-white/80 rounded-2xl shadow-xl p-8 border dark:border-gray-700 border-gray-200">
             {stats.topLanguages.map((lang, index) => (
               <div key={index} className="mb-6 last:mb-0">
                 <div className="flex justify-between mb-3">
-                  <span className="font-medium text-gray-900 dark:text-gray-200 flex items-center">
+                  <span className="font-medium dark:text-gray-200 text-gray-900 flex items-center">
                     <span className="w-2 h-2 rounded-full bg-blue-500 mr-2" />
                     {lang.name}
                   </span>
-                  <span className="text-gray-600 dark:text-gray-400">{lang.percentage}%</span>
+                  <span className="dark:text-gray-400 text-gray-600">{lang.percentage}%</span>
                 </div>
-                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
+                <div className="w-full dark:bg-gray-700 bg-gray-200 rounded-full h-3 overflow-hidden">
                   <motion.div
                     className="h-full rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 relative"
                     initial={{ width: 0 }}
@@ -502,9 +488,6 @@ const AboutSection: React.FC = () => {
             ))}
           </div>
         </motion.div>
-
-        {/* Coffee cup animation */}
-       
       </div>
     </section>
   );

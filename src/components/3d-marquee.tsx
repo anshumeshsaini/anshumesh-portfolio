@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export interface MarqueeImage {
   src?: string;
@@ -32,7 +32,21 @@ export const ThreeDMarquee: React.FC<ThreeDMarqueeProps> = ({
     image: MarqueeImage;
     index: number;
   } | null>(null);
-  
+  const [isLightTheme, setIsLightTheme] = useState(false);
+
+  useEffect(() => {
+    // Check if window is defined (to avoid SSR issues)
+    if (typeof window !== 'undefined') {
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: light)');
+      setIsLightTheme(mediaQuery.matches);
+      
+      const handler = (e: MediaQueryListEvent) => setIsLightTheme(e.matches);
+      mediaQuery.addEventListener('change', handler);
+      
+      return () => mediaQuery.removeEventListener('change', handler);
+    }
+  }, []);
+
   // Ensure we have enough images to fill complete rows of 4
   const imagesPerRow = 4;
   const neededImages = Math.ceil(images.length / imagesPerRow) * imagesPerRow;
@@ -77,16 +91,18 @@ export const ThreeDMarquee: React.FC<ThreeDMarqueeProps> = ({
     <div 
       className={`w-full py-16 ${className}`}
       style={{
-        background: 'linear-gradient(135deg, #05080d 0%, #070a14 50%, #0a0f1c 100%)'
+        background: isLightTheme 
+          ? 'white' 
+          : 'linear-gradient(135deg, #05080d 0%, #070a14 50%, #0a0f1c 100%)'
       }}
     >
       <div className="text-center mb-12 px-4 max-w-4xl mx-auto">
-        <h2 className="text-4xl md:text-5xl font-bold text-blue-300 mb-4">
+        <h2 className={`text-4xl md:text-5xl font-bold ${isLightTheme ? 'text-black' : 'text-blue-300'} mb-4`}>
           {title}
         </h2>
         <p 
-          className="text-xl md:text-2xl text-transparent bg-clip-text bg-gradient-to-r from-blue-100 to-blue-50"
-          style={{ pointerEvents: 'none' }} // Add this to prevent mouse effects
+          className={`text-xl md:text-2xl ${isLightTheme ? 'text-black' : 'text-transparent bg-clip-text bg-gradient-to-r from-blue-100 to-blue-50'}`}
+          style={{ pointerEvents: 'none' }}
         >
           {subtitle}
         </p>
@@ -95,10 +111,14 @@ export const ThreeDMarquee: React.FC<ThreeDMarqueeProps> = ({
       <section 
         className="mx-auto block h-[600px] max-sm:h-[400px] overflow-hidden rounded-2xl w-[90%] relative"
         style={{
-          background: 'linear-gradient(135deg, rgba(26,58,110,0.9) 0%, rgba(58,110,181,0.9) 100%)',
+          background: isLightTheme 
+            ? 'white' 
+            : 'linear-gradient(135deg, rgba(26,58,110,0.9) 0%, rgba(58,110,181,0.9) 100%)',
           boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)',
           backdropFilter: 'blur(4px)',
-          border: '1px solid rgba(255,255,255,0.1)'
+          border: isLightTheme 
+            ? '1px solid rgba(0,0,0,0.1)' 
+            : '1px solid rgba(255,255,255,0.1)'
         }}
       >
         {/* Selected Image Overlay */}
@@ -126,12 +146,12 @@ export const ThreeDMarquee: React.FC<ThreeDMarqueeProps> = ({
                   className="w-full h-full object-contain"
                 />
               ) : (
-                <div className="w-full h-full bg-blue-700/50 flex items-center justify-center">
-                  <span className="text-blue-100">No Image</span>
+                <div className={`w-full h-full ${isLightTheme ? 'bg-gray-200' : 'bg-blue-700/50'} flex items-center justify-center`}>
+                  <span className={isLightTheme ? "text-black" : "text-blue-100"}>No Image</span>
                 </div>
               )}
               <button 
-                className="absolute top-4 right-4 bg-white/20 hover:bg-white/30 rounded-full p-2 backdrop-blur-sm transition-colors"
+                className={`absolute top-4 right-4 ${isLightTheme ? 'bg-black/20 hover:bg-black/30' : 'bg-white/20 hover:bg-white/30'} rounded-full p-2 backdrop-blur-sm transition-colors`}
                 onClick={(e) => {
                   e.stopPropagation();
                   closeSelectedImage();
@@ -160,18 +180,23 @@ export const ThreeDMarquee: React.FC<ThreeDMarqueeProps> = ({
                   }}
                   className="flex flex-col items-center gap-3 relative"
                 >
-                  <div className="absolute left-0 top-0 h-full w-0.5 bg-blue-400/30" />
+                  <div className={`absolute left-0 top-0 h-full w-0.5 ${isLightTheme ? 'bg-black/20' : 'bg-blue-400/30'}`} />
                   {imagesInGroup.map((image, imgIdx) => {
                     const globalIndex = idx * groupSize + imgIdx;
                     const isClickable = image.href || onImageClick || !image.href;
+                    const isFirstBox = idx === 0 && imgIdx === 0;
 
                     return (
                       <div key={`img-${imgIdx}`} className="relative">
-                        <div className="absolute top-0 left-0 w-full h-0.5 bg-blue-400/30" />
+                        <div className={`absolute top-0 left-0 w-full h-0.5 ${isLightTheme ? 'bg-black/20' : 'bg-blue-400/30'}`} />
                         <motion.div
                           whileHover={{ y: -10, scale: 1.05, zIndex: 10 }}
                           transition={{ duration: 0.3, ease: "easeInOut" }}
-                          className={`aspect-[970/700] w-full max-w-[340px] rounded-xl overflow-hidden ring-2 ring-blue-300/50 shadow-2xl hover:shadow-3xl transition-all duration-300 ${
+                          className={`aspect-[970/700] w-full max-w-[340px] rounded-xl overflow-hidden ${
+                            isLightTheme && isFirstBox 
+                              ? 'bg-white' 
+                              : `ring-2 ${isLightTheme ? 'ring-black/20' : 'ring-blue-300/50'}`
+                          } shadow-2xl hover:shadow-3xl transition-all duration-300 ${
                             isClickable ? "cursor-pointer" : ""
                           }`}
                           onClick={() => handleImageClick(image, globalIndex)}
@@ -188,8 +213,8 @@ export const ThreeDMarquee: React.FC<ThreeDMarqueeProps> = ({
                               className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
                             />
                           ) : (
-                            <div className="w-full h-full bg-blue-700/50 flex items-center justify-center">
-                              <span className="text-blue-100">No Image</span>
+                            <div className={`w-full h-full ${isLightTheme ? 'bg-gray-200' : 'bg-blue-700/50'} flex items-center justify-center`}>
+                              <span className={isLightTheme ? "text-black" : "text-blue-100"}>No Image</span>
                             </div>
                           )}
                         </motion.div>
