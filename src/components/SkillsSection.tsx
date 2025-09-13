@@ -4,6 +4,7 @@ import { useSkillStore } from '../store/skillStore';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { BorderBeam } from "./border-beam";
 
 const SkillsSection: React.FC = () => {
   const { skills, filteredSkills, activeFilter, setFilter } = useSkillStore();
@@ -186,6 +187,7 @@ const SkillsSection: React.FC = () => {
         >
           {categories.map((category) => (
             <motion.button
+            
               key={category.id}
               onClick={() => setFilter(category.id)}
               className={`relative px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 overflow-hidden ${
@@ -234,50 +236,53 @@ const SkillsSection: React.FC = () => {
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => setSelectedSkill(selectedSkill === skill.id ? null : skill.id)}
-              className={`relative bg-white/70 dark:bg-gray-800/70 rounded-2xl p-6 flex flex-col items-center justify-center transition-all duration-300 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 shadow-sm hover:shadow-md cursor-pointer ${
-                selectedSkill === skill.id ? 'ring-2 ring-blue-500/50 dark:ring-blue-400/50 shadow-lg' : ''
-              }`}
+              className="relative p-1 rounded-2xl"
             >
-              <div className="relative">
-                <div className="text-5xl mb-4">
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400">
-                    {skill.icon.charAt(0).toUpperCase()}
-                  </span>
+              <BorderBeam />
+              <div className={`relative bg-white/70 dark:bg-gray-800/70 rounded-xl p-6 flex flex-col items-center justify-center transition-all duration-300 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 shadow-sm hover:shadow-md cursor-pointer ${
+                selectedSkill === skill.id ? 'ring-2 ring-blue-500/50 dark:ring-blue-400/50 shadow-lg' : ''
+              }`}>
+                <div className="relative">
+                  <div className="text-5xl mb-4">
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400">
+                      {skill.icon.charAt(0).toUpperCase()}
+                    </span>
+                  </div>
                 </div>
+                
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">{skill.name}</h3>
+                
+                {/* Progress bar and mastery percentage - only shown when clicked */}
+                <AnimatePresence>
+                  {selectedSkill === skill.id && (
+                    <motion.div
+                      variants={progressVariants}
+                      initial="hidden"
+                      animate="visible"
+                      exit="exit"
+                      className="w-full overflow-hidden"
+                    >
+                      <div className="flex justify-between items-center mb-1">
+                        <span className="text-xs font-medium text-gray-600 dark:text-gray-400">Mastery</span>
+                        <span className="text-xs font-semibold text-blue-600 dark:text-blue-400">
+                          {skill.proficiency}%
+                        </span>
+                      </div>
+                      <div className="w-full bg-gray-200/70 dark:bg-gray-700/70 rounded-full h-2 overflow-hidden">
+                        <motion.div 
+                          className="h-full rounded-full bg-gradient-to-r from-blue-500 to-teal-400"
+                          initial={{ width: 0 }}
+                          animate={{ width: `${skill.proficiency}%` }}
+                          transition={{ 
+                            duration: 0.8,
+                            type: "spring"
+                          }}
+                        />
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
-              
-              <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">{skill.name}</h3>
-              
-              {/* Progress bar and mastery percentage - only shown when clicked */}
-              <AnimatePresence>
-                {selectedSkill === skill.id && (
-                  <motion.div
-                    variants={progressVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    className="w-full overflow-hidden"
-                  >
-                    <div className="flex justify-between items-center mb-1">
-                      <span className="text-xs font-medium text-gray-600 dark:text-gray-400">Mastery</span>
-                      <span className="text-xs font-semibold text-blue-600 dark:text-blue-400">
-                        {skill.proficiency}%
-                      </span>
-                    </div>
-                    <div className="w-full bg-gray-200/70 dark:bg-gray-700/70 rounded-full h-2 overflow-hidden">
-                      <motion.div 
-                        className="h-full rounded-full bg-gradient-to-r from-blue-500 to-teal-400"
-                        initial={{ width: 0 }}
-                        animate={{ width: `${skill.proficiency}%` }}
-                        transition={{ 
-                          duration: 0.8,
-                          type: "spring"
-                        }}
-                      />
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
             </motion.div>
           ))}
         </motion.div>
