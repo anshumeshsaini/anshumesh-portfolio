@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -39,13 +39,23 @@ const ScrollHandler = () => {
 
     // Section-wise snapping logic for HomePage
     if (pathname === '/') {
-      const sections = gsap.utils.toArray('section');
+      const getSnapPoints = () => {
+        const sections = gsap.utils.toArray('section');
+        const scrollHeight = document.documentElement.scrollHeight;
+        const viewportHeight = window.innerHeight;
+        const totalScrollableHeight = scrollHeight - viewportHeight;
+        if (totalScrollableHeight <= 0) return [0];
+        return sections.map((s: any) => s.offsetTop / totalScrollableHeight);
+      };
 
       ScrollTrigger.create({
         start: 0,
         end: 'max',
         snap: {
-          snapTo: 1 / (sections.length > 0 ? sections.length - 1 : 1),
+          snapTo: (value) => {
+            const points = getSnapPoints();
+            return gsap.utils.snap(points, value);
+          },
           duration: { min: 0.2, max: 0.8 },
           delay: 0.1,
           ease: 'power1.inOut'
@@ -54,10 +64,15 @@ const ScrollHandler = () => {
     }
 
     lenis.scrollTo(0, { immediate: true });
-
     (window as any).lenis = lenis;
 
+    // Refresh ScrollTrigger after a short delay for accuracy
+    const timeoutId = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 500);
+
     return () => {
+      clearTimeout(timeoutId);
       lenis.destroy();
       gsap.ticker.remove(lenis.raf);
       ScrollTrigger.getAll().forEach(t => t.kill());

@@ -6,35 +6,50 @@ import ProjectsSection from '../components/ProjectsSection';
 import ExperienceSection from '../components/ExperienceSection';
 import TestimonialsSection from '../components/TestimonialsSection';
 import SmokeyCursor from '../components/smokey-cursor';
-import { ThreeDMarquee} from "../components/3d-marquee";
+import { ThreeDMarquee } from "../components/3d-marquee";
 import img1 from '../assets/img1.png';
-import img2 from '../assets/img2.png';  
+import img2 from '../assets/img2.png';
 import img3 from '../assets/img3.png';
 import img4 from '../assets/img4.png';
 import img5 from '../assets/img5.png';
 
 
 const images = [
-  { 
-    imgElement: <img src={img1} alt="Gallery item 1" />,
-    alt: "Gallery item 1"
+  {
+    src: img1,
+    alt: "Fullstack Excellence Certificate",
+    category: "Mastery",
+    date: "Dec 2023",
+    reflection: "This certificate represents the culmination of 500+ hours of deep-dive development into modern web architectures."
   },
-  { 
-    imgElement: <img src={img3} alt="Gallery item 2" />,
-    alt: "Gallery item 2" 
+  {
+    src: img2,
+    alt: "UI/UX Design Distinction",
+    category: "Design",
+    date: "Jan 2024",
+    reflection: "Achieving this was about understanding the human element behind the pixel—where empathy meets engineering."
   },
-  { 
-    imgElement: <img src={img2} alt="Gallery item 2" />,
-    alt: "Gallery item 2" 
+  {
+    src: img3,
+    alt: "Cloud Engineering Artifact",
+    category: "Infrastructure",
+    date: "Feb 2024",
+    reflection: "Mastering the invisible backbone of the web. This was a challenging multi-month journey into scalability."
   },
-  { 
-    imgElement: <img src={img4} alt="Gallery item 2" />,
-    alt: "Gallery item 2" 
-  },{ 
-    imgElement: <img src={img5} alt="Gallery item 2" />,
-    alt: "Gallery item 2" 
+  {
+    src: img4,
+    alt: "Open Source Contribution Award",
+    category: "Community",
+    date: "March 2024",
+    reflection: "A badge of honor for giving back to the ecosystem that taught me everything. Collaboration is the true superpower."
   },
-  // ...
+  {
+    src: img5,
+    alt: "Advanced Algorithms Milestone",
+    category: "Logic",
+    date: "Spring 2024",
+    reflection: "The thrill of solving complex problems with elegant code. This artifact marks a major shift in my algorithmic thinking."
+  }
 ];
 
 
@@ -44,11 +59,11 @@ const HomePage: React.FC = () => {
       <HeroSection />
       <AboutSection />
       <SkillsSection />
-        <ExperienceSection />
+      <ExperienceSection />
       <ProjectsSection />
-     
 
-<ThreeDMarquee images={images} cols={3} />
+
+      <ThreeDMarquee images={images} cols={3} />
       <TestimonialsSection />
     </div>
   );

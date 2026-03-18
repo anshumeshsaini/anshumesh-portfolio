@@ -2,33 +2,20 @@ import React, { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Star, Volume2, VolumeX, Heart, Sparkles } from 'lucide-react';
 import { useTestimonialStore } from '../store/testimonialStore';
-import { useThemeStore } from '../store/themeStore';
+
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+gsap.registerPlugin(ScrollTrigger);
 const TestimonialsSection: React.FC = () => {
   const { testimonials, currentIndex, nextTestimonial, prevTestimonial, setTestimonial } = useTestimonialStore();
   const [isSpeaking, setIsSpeaking] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const bgCanvasRef = useRef<HTMLCanvasElement>(null);
-  const { theme } = useThemeStore();
 
   useGSAP(() => {
-    // Organic entrance for the main card
-    gsap.from(".testimonial-card", {
-      opacity: 0,
-      scale: 0.95,
-      rotation: 2,
-      y: 40,
-      duration: 1,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top 75%",
-      }
-    });
-
     // Subtle floating
     gsap.to(".testimonial-card", {
       rotation: -1,
@@ -38,7 +25,7 @@ const TestimonialsSection: React.FC = () => {
       yoyo: true,
       ease: "sine.inOut"
     });
-  }, { scope: sectionRef });
+  }, { scope: sectionRef, dependencies: [currentIndex] });
 
   // Aurora Background logic
   useEffect(() => {

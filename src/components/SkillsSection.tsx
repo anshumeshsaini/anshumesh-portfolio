@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSkillStore } from '../store/skillStore';
-import { useThemeStore } from '../store/themeStore';
 import { Zap, Feather, Code2, Layers, Sparkles, BrainCircuit } from 'lucide-react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
@@ -11,7 +10,6 @@ const SkillsSection: React.FC = () => {
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const bgCanvasRef = useRef<HTMLCanvasElement>(null);
-  const { theme } = useThemeStore();
 
   useGSAP(() => {
     // Asymmetrical floating for skill cards
