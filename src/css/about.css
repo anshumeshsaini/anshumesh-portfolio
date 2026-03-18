@@ -1,0 +1,27 @@
+/* No animation by default */
+.click-shine {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+@keyframes click-shine {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    60% {
+        transform: translateX(100%);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+.animate-click-shine {
+    animation: click-shine 1s ease-in-out;
+}
