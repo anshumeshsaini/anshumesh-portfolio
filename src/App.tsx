@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -18,9 +18,10 @@ gsap.registerPlugin(ScrollTrigger);
 
 const ScrollHandler = () => {
   const { pathname } = useLocation();
+  const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    // Initialize Lenis smooth scroll
+    // Initialize Lenis once
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -29,54 +30,38 @@ const ScrollHandler = () => {
       lerp: 0.1,
     });
 
+    lenisRef.current = lenis;
+
+    // Synchronize Lenis with ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update);
 
-    gsap.ticker.add((time) => {
+    // Named function for ticker to allow proper cleanup
+    const update = (time: number) => {
       lenis.raf(time * 1000);
-    });
-
+    };
+    gsap.ticker.add(update);
     gsap.ticker.lagSmoothing(0);
 
-    // Section-wise snapping logic for HomePage
-    if (pathname === '/') {
-      const getSnapPoints = () => {
-        const sections = gsap.utils.toArray('section');
-        const scrollHeight = document.documentElement.scrollHeight;
-        const viewportHeight = window.innerHeight;
-        const totalScrollableHeight = scrollHeight - viewportHeight;
-        if (totalScrollableHeight <= 0) return [0];
-        return sections.map((s: any) => s.offsetTop / totalScrollableHeight);
-      };
-
-      ScrollTrigger.create({
-        start: 0,
-        end: 'max',
-        snap: {
-          snapTo: (value) => {
-            const points = getSnapPoints();
-            return gsap.utils.snap(points, value);
-          },
-          duration: { min: 0.2, max: 0.8 },
-          delay: 0.1,
-          ease: 'power1.inOut'
-        }
-      });
-    }
-
-    lenis.scrollTo(0, { immediate: true });
+    // Register global lenis for easy access (optional)
     (window as any).lenis = lenis;
 
-    // Refresh ScrollTrigger after a short delay for accuracy
-    const timeoutId = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 500);
-
     return () => {
-      clearTimeout(timeoutId);
       lenis.destroy();
-      gsap.ticker.remove(lenis.raf);
+      gsap.ticker.remove(update);
       ScrollTrigger.getAll().forEach(t => t.kill());
     };
+  }, []);
+
+  // Handle route changes
+  useEffect(() => {
+    if (lenisRef.current) {
+      // Small delay to allow DOM to render before scrolling and refreshing
+      const timer = setTimeout(() => {
+        lenisRef.current?.scrollTo(0, { immediate: true });
+        ScrollTrigger.refresh();
+      }, 100);
+      return () => clearTimeout(timer);
+    }
   }, [pathname]);
 
   return null;
