@@ -104,7 +104,7 @@ const ProjectsSection: React.FC = () => {
       initial={{ opacity: 0, scaleY: 0 }}
       animate={{ opacity: 1, scaleY: 1 }}
       exit={{ opacity: 0, scaleY: 0 }}
-      className="mt-8 p-8 rounded-[2.5rem] bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-white/5 shadow-inner"
+      className="mt-8 p-8 rounded-[2.5rem] bg-slate-100 dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/5 shadow-inner"
     >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-4">
@@ -128,7 +128,7 @@ const ProjectsSection: React.FC = () => {
   );
 
   return (
-    <section id="projects" ref={sectionRef} className="relative py-40 overflow-hidden bg-white dark:bg-slate-950 transition-colors duration-500">
+    <section id="projects" ref={sectionRef} className="relative py-40 overflow-hidden bg-white dark:bg-[#030303] text-slate-900 dark:text-white transition-colors duration-500">
       <canvas ref={bgCanvasRef} className="absolute inset-0 z-0 opacity-40 pointer-events-none" />
 
       <div className="container mx-auto px-6 relative z-10" ref={containerRef}>
@@ -139,7 +139,7 @@ const ProjectsSection: React.FC = () => {
           <h2 className="text-5xl md:text-7xl font-black tracking-tighter leading-none text-slate-900 dark:text-white">
             A <span className="text-indigo-600 italic font-serif">labor</span> of curiosity.
           </h2>
-          <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed font-medium">
+          <p className="text-xl text-slate-400 max-w-2xl leading-relaxed font-medium">
             Every project here started as a late-night brainstorm or a problem I just couldn't ignore. These are my <span className="text-indigo-500">experiments</span> in creating things that matter.
           </p>
         </div>
@@ -150,7 +150,7 @@ const ProjectsSection: React.FC = () => {
             <button
               key={cat.id}
               onClick={() => setFilter(cat.id)}
-              className={`px-6 py-3 rounded-2xl font-black text-xs tracking-tight transition-all duration-300 ${activeFilter === cat.id ? 'bg-indigo-600 text-white shadow-xl scale-105' : 'bg-slate-50 dark:bg-slate-900/50 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-white/5 hover:border-indigo-500/30'}`}
+              className={`px-6 py-3 rounded-2xl font-black text-xs tracking-tight transition-all duration-300 ${activeFilter === cat.id ? 'bg-indigo-600 text-white shadow-xl scale-105' : 'bg-slate-100 dark:bg-[#0a0a0a] text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-white/5 hover:border-indigo-500/30'}`}
             >
               {cat.name}
             </button>

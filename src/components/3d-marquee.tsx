@@ -161,7 +161,7 @@ export const ThreeDMarquee: React.FC<ThreeDMarqueeProps> = ({
   return (
     <section
       ref={containerRef}
-      className={`relative w-full py-60 overflow-hidden bg-slate-950 transition-colors duration-1000 ${className}`}
+      className={`relative w-full py-60 overflow-hidden bg-slate-50 dark:bg-black transition-colors duration-1000 ${className}`}
       style={{ perspective: "2000px" }}
     >
       {/* Deep Sea Particles */}
@@ -200,10 +200,10 @@ export const ThreeDMarquee: React.FC<ThreeDMarqueeProps> = ({
             <span>The Memory Constellation</span>
           </motion.div>
 
-          <h2 className="text-6xl md:text-9xl font-black tracking-tighter text-white mb-10 leading-none filter drop-shadow-[0_0_30px_rgba(79,70,229,0.3)]">
+          <h2 className="text-6xl md:text-9xl font-black tracking-tighter text-slate-900 dark:text-white mb-10 leading-none filter drop-shadow-[0_0_30px_rgba(79,70,229,0.3)]">
             {title}
           </h2>
-          <p className="text-xl md:text-2xl text-slate-400 font-medium leading-relaxed max-w-2xl mx-auto">
+          <p className="text-xl md:text-2xl text-slate-500 dark:text-slate-400 font-medium leading-relaxed max-w-2xl mx-auto">
             {subtitle}
           </p>
         </div>
@@ -270,7 +270,7 @@ export const ThreeDMarquee: React.FC<ThreeDMarqueeProps> = ({
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="absolute inset-0 bg-slate-950/95 backdrop-blur-[150px]"
+              className="absolute inset-0 bg-black/95 backdrop-blur-[150px]"
               onClick={() => setSelectedImage(null)}
             />
 
@@ -279,17 +279,17 @@ export const ThreeDMarquee: React.FC<ThreeDMarqueeProps> = ({
               animate={{ scale: 1, y: 0, opacity: 1, rotateX: 0 }}
               exit={{ scale: 0.5, y: -300, opacity: 0, rotateX: 60 }}
               transition={{ type: "spring", damping: 25, stiffness: 120 }}
-              className="relative w-full max-w-6xl bg-slate-900 rounded-[4rem] overflow-hidden shadow-[0_0_150px_rgba(79,70,229,0.3)] flex flex-col lg:flex-row border border-indigo-500/20"
+              className="relative w-full max-w-6xl bg-white dark:bg-[#0a0a0a] rounded-[4rem] overflow-hidden shadow-[0_0_150px_rgba(79,70,229,0.3)] flex flex-col lg:flex-row border border-slate-200 dark:border-indigo-500/20"
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 onClick={() => setSelectedImage(null)}
-                className="absolute top-10 right-10 z-[110] w-16 h-16 rounded-full bg-slate-800 text-indigo-400 hover:text-white hover:bg-indigo-600 transition-all flex items-center justify-center shadow-2xl border border-white/5"
+                className="absolute top-10 right-10 z-[110] w-16 h-16 rounded-full bg-slate-100 dark:bg-slate-800 text-indigo-500 hover:text-white hover:bg-indigo-600 transition-all flex items-center justify-center shadow-2xl border border-slate-200 dark:border-white/5"
               >
                 <X size={28} />
               </button>
 
-              <div className="w-full lg:w-1/2 h-[450px] lg:h-auto bg-slate-950 relative overflow-hidden group">
+              <div className="w-full lg:w-1/2 h-[450px] lg:h-auto bg-slate-100 dark:bg-slate-950 relative overflow-hidden group">
                 {selectedImage.image.src ? (
                   <img
                     src={selectedImage.image.src}
@@ -305,19 +305,19 @@ export const ThreeDMarquee: React.FC<ThreeDMarqueeProps> = ({
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(79,70,229,0.1),transparent)]" />
               </div>
 
-              <div className="w-full lg:w-1/2 p-16 md:p-24 flex flex-col justify-center bg-slate-900">
+              <div className="w-full lg:w-1/2 p-16 md:p-24 flex flex-col justify-center bg-white dark:bg-[#0a0a0a]">
                 <div className="flex items-center gap-4 text-indigo-500 font-black uppercase tracking-[0.5em] text-[10px] mb-12">
                   <span className="w-16 h-px bg-indigo-500/50" />
                   <span>Deep Sea Memory</span>
                 </div>
 
-                <h3 className="text-5xl md:text-7xl font-black text-white mb-10 tracking-tighter leading-[0.9]">
+                <h3 className="text-5xl md:text-7xl font-black text-slate-900 dark:text-white mb-10 tracking-tighter leading-[0.9]">
                   {selectedImage.image.alt}
                 </h3>
 
                 <div className="relative mb-16">
                   <Quote className="absolute -top-12 -left-12 text-indigo-500/5 w-32 h-32 rotate-12" />
-                  <p className="text-2xl md:text-3xl text-slate-400 font-serif leading-relaxed relative z-10 italic">
+                  <p className="text-2xl md:text-3xl text-slate-500 dark:text-slate-400 font-serif leading-relaxed relative z-10 italic">
                     {selectedImage.image.reflection || "A rare moment of breakthrough submerged in deep focus. This represents an evolution of creative identity."}
                   </p>
                 </div>

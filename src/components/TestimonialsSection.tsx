@@ -84,10 +84,12 @@ const TestimonialsSection: React.FC = () => {
     '0': "Working with this team felt like a masterclass in collaboration. We didn't just meet deadlines; we grew together.",
     '1': "I learned so much about user empathy during this project. It wasn't just about the features, but the people using them.",
     '2': "This was a highlight of my year. Pure creative energy and a shared pursuit of something different.",
+    '3': "Technical leadership is about more than just code; it's about building a culture of excellence and trust.",
+    '4': "There's no greater reward than seeing a student have that 'aha!' moment. Teaching fuels my own passion for learning.",
   };
 
   return (
-    <section id="testimonials" ref={sectionRef} className="relative py-40 overflow-hidden bg-white dark:bg-slate-950 transition-colors duration-500">
+    <section id="testimonials" ref={sectionRef} className="relative py-40 overflow-hidden bg-white dark:bg-[#030303] text-slate-900 dark:text-white transition-colors duration-500">
       <canvas ref={bgCanvasRef} className="absolute inset-0 z-0 opacity-40 pointer-events-none" />
 
       <div className="container mx-auto px-6 relative z-10" ref={containerRef}>
@@ -98,7 +100,7 @@ const TestimonialsSection: React.FC = () => {
           <h2 className="text-5xl md:text-7xl font-black tracking-tighter leading-none text-slate-900 dark:text-white">
             Kind words from <span className="text-purple-600 italic font-serif">colleagues</span>.
           </h2>
-          <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed font-medium">
+          <p className="text-xl text-slate-400 max-w-2xl leading-relaxed font-medium">
             Behind every line of code is a conversation. These are the reflections of the wonderful people I've had the pleasure to build with.
           </p>
         </div>
@@ -110,11 +112,11 @@ const TestimonialsSection: React.FC = () => {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
-              className="testimonial-card p-12 md:p-20 rounded-[4rem] bg-white dark:bg-slate-900 shadow-2xl border border-slate-100 dark:border-white/5 relative"
+              className="testimonial-card p-12 md:p-20 rounded-[4rem] bg-slate-50 dark:bg-[#0a0a0a] shadow-2xl border border-slate-200 dark:border-white/5 relative"
             >
               <div className="flex flex-col md:flex-row items-center md:items-start gap-16">
                 <div className="flex-shrink-0 relative">
-                  <div className="w-40 h-40 rounded-[2.5rem] overflow-hidden rotate-3 hover:rotate-0 transition-transform duration-500 border-4 border-white dark:border-slate-800 shadow-xl">
+                  <div className="w-40 h-40 rounded-[2.5rem] overflow-hidden rotate-3 hover:rotate-0 transition-transform duration-500 border-4 border-slate-200 dark:border-slate-800 shadow-xl">
                     <img
                       src={testimonials[currentIndex].image}
                       alt={testimonials[currentIndex].name}
@@ -140,7 +142,7 @@ const TestimonialsSection: React.FC = () => {
                   </div>
 
                   {/* Personal Reflection */}
-                  <div className="p-8 rounded-3xl bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-white/5 shadow-inner">
+                  <div className="p-8 rounded-3xl bg-slate-100 dark:bg-[#030303] border border-slate-200 dark:border-white/5 shadow-inner">
                     <p className="text-xs italic text-slate-500 dark:text-slate-500">
                       <span className="font-black text-purple-500 mr-2 uppercase tracking-tighter not-italic">My Reflection //</span>
                       "{reflections[currentIndex] || "A truly memorable collaboration built on trust and shared vision."}"

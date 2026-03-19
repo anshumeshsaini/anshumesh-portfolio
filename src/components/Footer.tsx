@@ -115,7 +115,7 @@ const Footer: React.FC = () => {
   return (
     <footer
       ref={footerRef}
-      className="relative pt-32 pb-16 overflow-hidden bg-white dark:bg-slate-950 transition-colors duration-500"
+      className="relative pt-32 pb-16 overflow-hidden bg-white dark:bg-[#030303] text-slate-900 dark:text-white transition-colors duration-500"
     >
       <canvas ref={bgCanvasRef} className="absolute inset-0 z-0 opacity-40 pointer-events-none" />
 
@@ -128,7 +128,7 @@ const Footer: React.FC = () => {
               <h3 className="text-4xl md:text-5xl font-black tracking-tighter text-slate-900 dark:text-white leading-[1.1]">
                 Let's build something <span className="text-indigo-500 italic font-serif">human</span> together.
               </h3>
-              <p className="text-lg text-slate-600 dark:text-slate-400 max-w-md leading-relaxed font-medium">
+              <p className="text-lg text-slate-400 max-w-md leading-relaxed font-medium">
                 I'm always open to new conversations, shared challenges, and late-night digital dreams. Reach out and say hi.
               </p>
             </div>
@@ -139,7 +139,7 @@ const Footer: React.FC = () => {
                   key={i}
                   href={social.href}
                   target="_blank"
-                  className="social-icon p-5 rounded-[2rem] bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-white/5 text-slate-500 dark:text-slate-400 hover:text-indigo-500 dark:hover:text-indigo-400 transition-all shadow-sm hover:shadow-xl"
+                  className="social-icon p-5 rounded-[2rem] bg-slate-100 dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/5 text-slate-500 dark:text-slate-400 hover:text-indigo-500 transition-all shadow-sm hover:shadow-xl"
                   aria-label={social.label}
                 >
                   {social.icon}
@@ -147,9 +147,9 @@ const Footer: React.FC = () => {
               ))}
             </div>
 
-            <div className="flex items-center gap-4 p-4 rounded-3xl bg-indigo-50/50 dark:bg-indigo-900/10 border border-indigo-100 dark:border-indigo-500/10 max-w-fit">
+            <div className="flex items-center gap-4 p-4 rounded-3xl bg-indigo-900/10 border border-indigo-500/10 max-w-fit">
               <Clock size={16} className="text-indigo-500" />
-              <span className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
+              <span className="text-xs font-black uppercase tracking-widest text-slate-400">
                 Local Time: {time} (IST)
               </span>
             </div>
@@ -163,7 +163,7 @@ const Footer: React.FC = () => {
                 <li key={i}>
                   <Link
                     to={link.path}
-                    className="text-lg font-bold text-slate-600 dark:text-slate-400 hover:text-indigo-500 transition-colors flex items-center group"
+                    className="text-lg font-bold text-slate-400 hover:text-indigo-500 transition-colors flex items-center group"
                   >
                     <Compass size={14} className="mr-3 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all" />
                     {link.name}
@@ -179,7 +179,7 @@ const Footer: React.FC = () => {
               <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400">Ascend</h4>
               <button
                 onClick={scrollToTop}
-                className="group relative p-8 rounded-[3rem] bg-slate-900 dark:bg-white text-white dark:text-slate-900 overflow-hidden shadow-2xl transition-transform hover:scale-105 active:scale-95"
+                className="group relative p-8 rounded-[3rem] bg-indigo-600 text-white overflow-hidden shadow-2xl transition-transform hover:scale-105 active:scale-95"
               >
                 <span className="relative z-10 font-black text-xs uppercase tracking-[0.3em]">Back to Start</span>
                 <div className="absolute inset-0 bg-indigo-500 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
@@ -190,8 +190,8 @@ const Footer: React.FC = () => {
               <div className="flex items-center md:justify-end gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400">
                 Handcrafted <Heart size={10} className="text-indigo-500 fill-indigo-500 animate-pulse" /> under the stars.
               </div>
-              <div className="text-[10px] font-bold text-slate-300 dark:text-slate-700">
-                ANSHUMESH © {new Date().getFullYear()}
+              <div className="text-[10px] font-bold text-slate-500 dark:text-slate-700">
+                ANSHUMESH © 2024
               </div>
             </div>
           </div>
@@ -201,7 +201,7 @@ const Footer: React.FC = () => {
 
       {/* Decorative Signature Grid */}
       <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-slate-200 dark:via-slate-800 to-transparent" />
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 p-2 bg-white dark:bg-slate-950">
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 p-2 bg-white dark:bg-slate-950 border border-slate-100 dark:border-transparent">
         <Sparkles size={12} className="text-indigo-500/20" />
       </div>
     </footer>

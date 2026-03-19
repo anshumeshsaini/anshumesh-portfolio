@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import { Testimonial } from '../types';
 import aditya from './aditya.jpg';
-import { p } from 'framer-motion/client';
 import prathmesh from './prathmesh.png';
 
 interface TestimonialState {
@@ -37,7 +36,25 @@ const testimonialData: Testimonial[] = [
     "position": "Hackathon Team Member",
     "company": "Hackathon Project",
     "testimonial": "During our hackathon, Anshumesh played a key role in ensuring we delivered a high-quality, functional prototype. His ability to work under pressure and write clean, scalable code was truly impressive.",
-    "image": "https://imgs.search.brave.com/uezoezsyT18Zmf2kGpFt8d3IBvj8G_PRNHV21OLGDFM/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS12ZWN0/b3IvY2hhcmFjdGVy/LWF2YXRhci1pc29s/YXRlZF83MjkxNDkt/MTk0ODAxLmpwZz9z/ZW10PWFpc19pdGVt/c19ib29zdGVkJnc9/NzQw",
+    "image": "https://imgs.search.brave.com/C9CmRhDLpUbkeUGOhSZzar4g4g_b7BkwTQb4gP_geyA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jNS5y/Z3N0YXRpYy5uZXQv/bS80MTU0NDc1Njc2/NjEyNTYvaW1hZ2Vz/L3N5bWJvbHMvc3Zn/L2NsYXNzaWZpY2F0/aW9uLWNvcnBvcmF0/ZS5zdmc",
+    "rating": 5
+  },
+  {
+    "id": "4",
+    "name": "Arjun Sharma",
+    "position": "CEO",
+    "company": "Mediaonstake",
+    "testimonial": "As our Technical Lead, Anshumesh demonstrated exceptional foresight and deep technical knowledge. He transformed our development process and delivered a platform that exceeded our expectations.",
+    "image": "https://imgs.search.brave.com/C9CmRhDLpUbkeUGOhSZzar4g4g_b7BkwTQb4gP_geyA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jNS5y/Z3N0YXRpYy5uZXQv/bS80MTU0NDc1Njc2/NjEyNTYvaW1hZ2Vz/L3N5bWJvbHMvc3Zn/L2NsYXNzaWZpY2F0/aW9uLWNvcnBvcmF0/ZS5zdmc",
+    "rating": 5
+  },
+  {
+    "id": "5",
+    "name": "Sneha Reddy",
+    "position": "Project Manager",
+    "company": "Cybershield",
+    "testimonial": "Anshumesh is a brilliant instructor and a security expert. His ability to explain complex concepts in a simple way is rare. He has been instrumental in training our core team.",
+    "image": "https://imgs.search.brave.com/C9CmRhDLpUbkeUGOhSZzar4g4g_b7BkwTQb4gP_geyA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jNS5y/Z3N0YXRpYy5uZXQv/bS80MTU0NDc1Njc2/NjEyNTYvaW1hZ2Vz/L3N5bWJvbHMvc3Zn/L2NsYXNzaWZpY2F0/aW9uLWNvcnBvcmF0/ZS5zdmc",
     "rating": 5
   }
 ];

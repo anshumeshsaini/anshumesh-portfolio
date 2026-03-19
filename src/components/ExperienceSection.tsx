@@ -101,13 +101,15 @@ const ExperienceSection: React.FC = () => {
     '1': "A period of intense learning and collaboration. Beyond the code, I discovered the power of a shared vision.",
     '2': "The highlight was leading a team through a critical launch—we survived on coffee and pure passion.",
     '3': "This is where I truly understood that good design is as much about empathy as it is about pixels.",
+    '4': "Managing high-stakes projects taught me that technical leadership is 20% code and 80% empowering people.",
+    '5': "Teaching others is the ultimate way to master a subject. It's about breaking down complexity into inspiration.",
   };
 
   return (
     <section
       id="experience"
       ref={sectionRef}
-      className="relative py-40 overflow-hidden bg-white dark:bg-slate-950 transition-colors duration-500"
+      className="relative py-40 overflow-hidden bg-white dark:bg-[#030303] text-slate-900 dark:text-white transition-colors duration-500"
     >
       <canvas ref={bgCanvasRef} className="absolute inset-0 z-0 opacity-40 pointer-events-none" />
 
@@ -119,7 +121,7 @@ const ExperienceSection: React.FC = () => {
           <h2 className="text-5xl md:text-7xl font-black tracking-tighter leading-none text-slate-900 dark:text-white">
             The <span className="text-indigo-500 italic font-serif">chapters</span> of my growth.
           </h2>
-          <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed font-medium">
+          <p className="text-xl text-slate-400 max-w-2xl leading-relaxed font-medium">
             My career isn't just a series of job titles—it's a journey of <span className="text-indigo-500">shared lessons</span>, human connections, and the constant pursuit of better solutions.
           </p>
         </div>
@@ -165,8 +167,8 @@ const ExperienceSection: React.FC = () => {
                           {exp.duration}
                         </span>
                         <div className="flex gap-2">
-                          <Globe size={14} className="text-slate-300" />
-                          <Award size={14} className="text-slate-300" />
+                          <Globe size={14} className="text-slate-400 dark:text-slate-300" />
+                          <Award size={14} className="text-slate-400 dark:text-slate-300" />
                         </div>
                       </div>
 
@@ -180,7 +182,7 @@ const ExperienceSection: React.FC = () => {
                       </p>
 
                       {/* Human Takeaway */}
-                      <div className="p-6 rounded-2xl bg-white dark:bg-slate-950 border border-slate-100 dark:border-white/5 shadow-inner">
+                      <div className="p-6 rounded-2xl bg-slate-100 dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/5 shadow-inner">
                         <p className="text-xs italic text-slate-500 dark:text-slate-400">
                           <span className="font-black text-indigo-500 mr-2 uppercase tracking-tighter not-italic">Key Takeaway //</span>
                           "{humanContext[exp.id] || "Growth is a collaborative effort."}"

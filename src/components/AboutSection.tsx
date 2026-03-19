@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Download, Github, Coffee, BookOpen, Heart, Music, Camera, MapPin, Terminal } from 'lucide-react';
 import { useGithubStore } from '../store/githubStore';
-import anshumesh from '../assets/anshumesh.jpeg';
+import anshumesh from '../assets/anshumesh.png';
 import '../css/about.css';
 import { useThemeStore } from '../store/themeStore';
 import gsap from 'gsap';
@@ -84,7 +84,7 @@ const AboutSection: React.FC = () => {
       ctx.closePath();
 
       const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, radius * 2);
-      gradient.addColorStop(0, theme.isDark ? 'rgba(99, 102, 241, 0.06)' : 'rgba(99, 102, 241, 0.03)');
+      gradient.addColorStop(0, 'rgba(99, 102, 241, 0.1)');
       gradient.addColorStop(1, 'transparent');
       ctx.fillStyle = gradient;
       ctx.fill();
@@ -155,7 +155,7 @@ const AboutSection: React.FC = () => {
     <section
       ref={sectionRef}
       id="about"
-      className="relative py-40 overflow-hidden bg-white dark:bg-slate-950 transition-colors duration-500"
+      className="relative py-40 overflow-hidden bg-white dark:bg-[#030303] text-slate-900 dark:text-white transition-colors duration-500"
     >
       <canvas ref={canvasRef} className="absolute inset-0 z-0 pointer-events-none" />
 
@@ -166,7 +166,7 @@ const AboutSection: React.FC = () => {
           <div className="flex-1 relative perspective-1000">
             <div
               ref={profileRef}
-              className="relative z-10 p-4 bg-white/40 dark:bg-white/5 backdrop-blur-2xl border border-white/20 rounded-[3rem] shadow-2xl transition-transform transform-style-3d group"
+              className="relative z-10 p-4 bg-white dark:bg-white/5 backdrop-blur-2xl border border-slate-200 dark:border-white/20 rounded-[3rem] shadow-2xl transition-transform transform-style-3d group"
             >
               <img
                 src={anshumesh}
@@ -174,7 +174,7 @@ const AboutSection: React.FC = () => {
                 className="w-full aspect-[4/5] object-cover rounded-[2.5rem] transition-all duration-700"
               />
 
-              <div className="absolute -bottom-6 -right-6 p-6 bg-slate-900 text-white rounded-3xl shadow-2xl border border-white/10 rotate-3 group-hover:rotate-0 transition-transform">
+              <div className="absolute -bottom-6 -right-6 p-6 bg-slate-900 dark:bg-slate-900 text-white rounded-3xl shadow-2xl border border-white/10 rotate-3 group-hover:rotate-0 transition-transform">
                 <div className="flex items-center gap-3 mb-2 text-emerald-500">
                   <div className="w-2 h-2 rounded-full bg-current animate-pulse" />
                   <span className="text-[10px] font-black uppercase tracking-[0.2em]">Verified Organic</span>
@@ -242,7 +242,7 @@ const AboutSection: React.FC = () => {
               </div>
 
               <div className="flex items-center gap-4">
-                <a href="https://github.com/anshumeshsaini" target="_blank" className="p-4 rounded-xl bg-slate-100 dark:bg-white/5 text-slate-500 hover:text-white hover:bg-slate-900 dark:hover:bg-indigo-600 transition-all shadow-md">
+                <a href="https://github.com/anshumeshsaini" target="_blank" className="p-4 rounded-xl bg-slate-100 dark:bg-white/5 text-slate-500 hover:text-white hover:bg-slate-900 dark:hover:bg-indigo-600 transition-all shadow-md border border-slate-200 dark:border-white/10">
                   <Github size={20} />
                 </a>
                 <a
@@ -262,7 +262,7 @@ const AboutSection: React.FC = () => {
       <div className="absolute bottom-0 left-0 w-full overflow-hidden py-10 opacity-[0.03] dark:opacity-[0.07] pointer-events-none">
         <motion.div
           style={{ x: xMarquee }}
-          className="flex whitespace-nowrap gap-20 text-[12vw] font-black text-slate-900 dark:text-white leading-none uppercase tracking-tighter"
+          className="flex whitespace-nowrap gap-20 text-[12vw] font-black text-slate-900 dark:text-white leading-none uppercase tracking-tighter select-none"
         >
           <span>Design • Code • Soul • Design • Code • Soul • Design • Code • Soul • Design • Code • Soul •</span>
         </motion.div>

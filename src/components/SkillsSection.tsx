@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState, useMemo, useEffect } from 'react';
+import React, { useRef, useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { useSkillStore } from '../store/skillStore';
 import { Zap } from 'lucide-react';
@@ -22,15 +22,15 @@ const SkillNode: React.FC<{
       <div
         className={`relative group flex flex-col items-center justify-center w-20 h-20 md:w-32 md:h-32 rounded-full border transition-all duration-500 ${isSelected
           ? 'bg-indigo-600/40 border-indigo-400 shadow-[0_0_50px_rgba(79,70,229,0.5)] scale-110'
-          : 'bg-slate-900/90 border-white/5 shadow-lg hover:border-indigo-500/30'
+          : 'bg-white dark:bg-slate-900/90 border-slate-200 dark:border-white/5 shadow-lg hover:border-indigo-500/30'
           }`}
       >
         <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
 
-        <div className="text-xl md:text-3xl font-black text-indigo-400 font-serif mb-1 group-hover:text-white transition-colors">
+        <div className="text-xl md:text-3xl font-black text-indigo-500 font-serif mb-1 group-hover:text-indigo-600 dark:group-hover:text-white transition-colors">
           {skill.name.charAt(0)}
         </div>
-        <span className="text-[7px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-white transition-colors text-center px-1">
+        <span className="text-[7px] md:text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-white transition-colors text-center px-1">
           {skill.name}
         </span>
 
@@ -135,7 +135,7 @@ const SkillsSection: React.FC = () => {
     <section
       id="skills"
       ref={sectionRef}
-      className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-slate-950 py-32 md:py-60"
+      className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-slate-50 dark:bg-black py-32 md:py-60"
       style={{ perspective: '3000px' }}
     >
       {/* Background Ambience */}
@@ -145,7 +145,7 @@ const SkillsSection: React.FC = () => {
           {Array.from({ length: 40 }).map((_, i) => (
             <div
               key={i}
-              className="absolute w-1 h-1 bg-white rounded-full animate-twinkle"
+              className="absolute w-1 h-1 bg-slate-400 dark:bg-white rounded-full animate-twinkle"
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
@@ -166,7 +166,7 @@ const SkillsSection: React.FC = () => {
           <span>Technical Domain</span>
         </motion.div>
 
-        <h2 className="text-5xl md:text-9xl font-black tracking-tighter text-white mb-6 leading-none filter drop-shadow-[0_0_30px_rgba(79,70,229,0.2)]">
+        <h2 className="text-5xl md:text-9xl font-black tracking-tighter text-slate-900 dark:text-white mb-6 leading-none filter drop-shadow-[0_0_30px_rgba(79,70,229,0.2)]">
           My digital <br /><span className="text-indigo-500 italic font-serif">arsenal</span>.
         </h2>
         <p className="text-base md:text-xl text-slate-500 font-medium leading-relaxed max-w-xl mx-auto opacity-80 px-4">
