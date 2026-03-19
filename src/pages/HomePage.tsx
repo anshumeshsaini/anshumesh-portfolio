@@ -5,7 +5,6 @@ import SkillsSection from '../components/SkillsSection';
 import ProjectsSection from '../components/ProjectsSection';
 import ExperienceSection from '../components/ExperienceSection';
 import TestimonialsSection from '../components/TestimonialsSection';
-import SmokeyCursor from '../components/smokey-cursor';
 import { ThreeDMarquee } from "../components/3d-marquee";
 import img1 from '../assets/img1.png';
 import img2 from '../assets/img2.png';
@@ -63,7 +62,7 @@ const HomePage: React.FC = () => {
       <ProjectsSection />
 
 
-      <ThreeDMarquee images={images} cols={3} />
+      <ThreeDMarquee images={images} />
       <TestimonialsSection />
     </div>
   );

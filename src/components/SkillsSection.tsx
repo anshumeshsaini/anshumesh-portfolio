@@ -1,200 +1,223 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+"use client";
+
+import React, { useRef, useState, useMemo, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { useSkillStore } from '../store/skillStore';
-import { Zap, Feather, Code2, Layers, Sparkles, BrainCircuit } from 'lucide-react';
+import { Zap } from 'lucide-react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 
+// Single Skill Node Component
+const SkillNode: React.FC<{
+  skill: any;
+  isSelected: boolean;
+  onSelect: () => void;
+}> = ({ skill, isSelected, onSelect }) => {
+  return (
+    <div
+      onClick={onSelect}
+      className={`absolute cursor-pointer transition-transform duration-500 ${isSelected ? 'z-50' : 'z-10'}`}
+      style={{ transformStyle: 'preserve-3d' }}
+    >
+      <div
+        className={`relative group flex flex-col items-center justify-center w-20 h-20 md:w-32 md:h-32 rounded-full border transition-all duration-500 ${isSelected
+          ? 'bg-indigo-600/40 border-indigo-400 shadow-[0_0_50px_rgba(79,70,229,0.5)] scale-110'
+          : 'bg-slate-900/90 border-white/5 shadow-lg hover:border-indigo-500/30'
+          }`}
+      >
+        <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
+
+        <div className="text-xl md:text-3xl font-black text-indigo-400 font-serif mb-1 group-hover:text-white transition-colors">
+          {skill.name.charAt(0)}
+        </div>
+        <span className="text-[7px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-white transition-colors text-center px-1">
+          {skill.name}
+        </span>
+
+        <svg className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none">
+          <circle cx="50%" cy="50%" r="48%" fill="none" stroke="rgba(255,255,255,0.02)" strokeWidth="1" />
+          <circle
+            cx="50%" cy="50%" r="48%" fill="none"
+            stroke="currentColor" strokeWidth="1.5"
+            strokeDasharray="100 100"
+            strokeDashoffset={100 - skill.proficiency}
+            className="text-indigo-500/30"
+          />
+        </svg>
+      </div>
+    </div>
+  );
+};
+
 const SkillsSection: React.FC = () => {
-  const { filteredSkills, activeFilter, setFilter } = useSkillStore();
+  const { skills } = useSkillStore();
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
+
   const sectionRef = useRef<HTMLElement>(null);
-  const bgCanvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const nodesRef = useRef<(HTMLDivElement | null)[]>([]);
+  const linesRef = useRef<(SVGPathElement | null)[]>([]);
+
+  // Persistent Orbital State
+  const orbitalState = useMemo(() => {
+    return skills.map((_, i) => ({
+      angle: (i / skills.length) * Math.PI * 2,
+      baseRadius: 300 + Math.random() * 300,
+      speed: 0.0003 + Math.random() * 0.0007,
+      yOffset: (Math.random() - 0.5) * 800,
+      phase: Math.random() * Math.PI * 2,
+    }));
+  }, [skills.length]);
 
   useGSAP(() => {
-    // Asymmetrical floating for skill cards
-    gsap.to(".skill-card", {
-      rotation: (i) => (i % 2 === 0 ? 1.5 : -1.5),
-      y: (i) => (i % 2 === 0 ? -8 : -12),
-      duration: 3 + Math.random(),
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut",
-      stagger: 0.2
-    });
+    if (!containerRef.current) return;
 
-    // Reveal animations
-    gsap.from(".reveal-element", {
-      y: 40,
-      opacity: 0,
-      duration: 1,
-      stagger: 0.1,
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top 75%",
-      }
-    });
-  }, { scope: sectionRef });
-
-  // Aurora Background
-  useEffect(() => {
-    const canvas = bgCanvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = sectionRef.current?.offsetHeight || 800;
+    const mouse = { x: 0, y: 0, lerpX: 0, lerpY: 0 };
+    const handleMouseMove = (e: MouseEvent) => {
+      const { left, top, width, height } = containerRef.current!.getBoundingClientRect();
+      mouse.x = (e.clientX - (left + width / 2)) / (width / 2);
+      mouse.y = (e.clientY - (top + height / 2)) / (height / 2);
     };
-    resize();
-    window.addEventListener('resize', resize);
 
-    let time = 0;
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const auroras = [
-        { y: 0.2, a: 60, f: 0.001, s: 0.002, c: [168, 85, 247], o: 0.04 },
-        { y: 0.6, a: 80, f: 0.0012, s: 0.0015, c: [99, 102, 241], o: 0.05 },
-      ];
-      auroras.forEach(a => {
-        ctx.beginPath();
-        const g = ctx.createLinearGradient(0, canvas.height * a.y - a.a, 0, canvas.height);
-        g.addColorStop(0, `rgba(${a.c[0]}, ${a.c[1]}, ${a.c[2]}, ${a.o})`);
-        g.addColorStop(1, 'transparent');
-        ctx.fillStyle = g;
-        for (let x = 0; x <= canvas.width; x += 10) {
-          const y = canvas.height * a.y + Math.sin(x * a.f + time * a.s) * a.a;
-          if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    window.addEventListener('mousemove', handleMouseMove);
+
+    const update = () => {
+      const time = Date.now() * 0.001;
+      const isMobile = window.innerWidth < 768;
+      const radiusFactor = isMobile ? 0.6 : 1;
+
+      mouse.lerpX += (mouse.x - mouse.lerpX) * 0.05;
+      mouse.lerpY += (mouse.y - mouse.lerpY) * 0.05;
+
+      skills.forEach((_, i) => {
+        const nodeEl = nodesRef.current[i];
+        const lineEl = linesRef.current[i];
+        if (!nodeEl || !lineEl) return;
+
+        const state = orbitalState[i];
+        const currentAngle = state.angle + time * state.speed;
+
+        let tx = Math.cos(currentAngle) * state.baseRadius * radiusFactor;
+        let tz = Math.sin(currentAngle) * state.baseRadius * radiusFactor;
+        let ty = state.yOffset * (isMobile ? 0.7 : 1) + Math.sin(time + state.phase) * 40;
+
+        const dist = Math.sqrt((mouse.lerpX * 400 - tx) ** 2 + (mouse.lerpY * 400 - ty) ** 2);
+        const force = Math.max(0, (500 - dist) / 500);
+        tx += (mouse.lerpX * 400 - tx) * force * 0.3;
+        ty += (mouse.lerpY * 400 - ty) * force * 0.3;
+
+        const depth = (tz + 500) / 1000;
+        const scale = (isMobile ? 0.4 : 0.5) + depth * (isMobile ? 0.6 : 0.8);
+        const opacity = 0.15 + depth * 0.85;
+
+        gsap.set(nodeEl, {
+          x: tx, y: ty, z: tz,
+          scale: scale,
+          opacity: opacity,
+        });
+
+        if (opacity > 0.2) {
+          lineEl.setAttribute('d', `M 0 0 L ${tx} ${ty}`);
+          lineEl.setAttribute('stroke-opacity', (opacity * 0.1).toString());
         }
-        ctx.lineTo(canvas.width, canvas.height); ctx.lineTo(0, canvas.height); ctx.fill();
       });
-      time += 1;
-      requestAnimationFrame(animate);
     };
-    animate();
-    return () => window.removeEventListener('resize', resize);
-  }, []);
 
-  const categories = [
-    { id: 'all', name: 'All', icon: <Sparkles size={14} />, insight: "A versatile toolkit for end-to-end digital creation." },
-    { id: 'frontend', name: 'Frontend', icon: <Feather size={14} />, insight: "Crafting interfaces that breathe and speak to users." },
-    { id: 'backend', name: 'Backend', icon: <Code2 size={14} />, insight: "Building the resilient heart of every application." },
-    { id: 'database', name: 'Database', icon: <Layers size={14} />, insight: "Architecting speed and data integrity." },
-    { id: 'devops', name: 'DevOps', icon: <Zap size={14} />, insight: "Automating the path to production excellence." },
-    { id: 'ai', name: 'AI/ML', icon: <BrainCircuit size={14} />, insight: "Merging code with cognitive intelligence." },
-  ];
+    gsap.ticker.add(update);
 
-  const exploring = [
-    { name: "Web3/Solidity", status: "Diving deep" },
-    { name: "Advanced GLSL", status: "Experimenting" },
-    { name: "Rust", status: "Learning" },
-  ];
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      gsap.ticker.remove(update);
+    };
+  }, { dependencies: [skills, orbitalState], scope: sectionRef });
 
   return (
     <section
       id="skills"
       ref={sectionRef}
-      className="relative py-40 overflow-hidden bg-white dark:bg-slate-950 transition-colors duration-500"
+      className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-slate-950 py-32 md:py-60"
+      style={{ perspective: '3000px' }}
     >
-      <canvas ref={bgCanvasRef} className="absolute inset-0 z-0 opacity-40 pointer-events-none" />
-
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="flex flex-col items-center text-center mb-24 space-y-6">
-          <span className="reveal-element text-[10px] font-black uppercase tracking-[0.4em] text-indigo-500">
-            My Workbench / The Craft
-          </span>
-          <h2 className="reveal-element text-5xl md:text-7xl font-black tracking-tighter leading-none text-slate-900 dark:text-white">
-            The <span className="text-indigo-500 italic font-serif">brushes</span> I use to build.
-          </h2>
-          <p className="reveal-element text-xl text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed font-medium">
-            To me, technology isn't just a list of proficiencies—it's a collection of tools, each hand-picked for its ability to turn an idea into a <span className="text-indigo-500">meaningful digital reality</span>.
-          </p>
-        </div>
-
-        {/* Categories with Human Insight */}
-        <div className="reveal-element flex flex-wrap justify-center gap-4 mb-16">
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setFilter(cat.id)}
-              className={`group flex items-center gap-3 px-6 py-3 rounded-2xl font-bold text-xs tracking-tight transition-all duration-300 ${activeFilter === cat.id ? 'bg-indigo-500 text-white shadow-xl scale-105' : 'bg-slate-50 dark:bg-slate-900/50 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-white/5 hover:border-indigo-500/30'}`}
-            >
-              {cat.icon}
-              {cat.name}
-            </button>
+      {/* Background Ambience */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150vw] h-[150vh] bg-[radial-gradient(circle,rgba(79,70,229,0.04)_0%,transparent_70%)]" />
+        <div className="stars-container absolute inset-0 opacity-20">
+          {Array.from({ length: 40 }).map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 bg-white rounded-full animate-twinkle"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 5}s`
+              }}
+            />
           ))}
         </div>
+      </div>
 
-        <div className="reveal-element max-w-lg mx-auto mb-20 text-center animate-fade-in">
-          <p className="text-xs italic text-slate-400 dark:text-slate-500">
-            "{categories.find(c => c.id === activeFilter)?.insight}"
-          </p>
-        </div>
+      <div className="container mx-auto px-6 relative z-10 text-center pointer-events-none">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 font-black uppercase tracking-[0.4em] text-[10px] mb-8"
+        >
+          <Zap size={14} className="fill-indigo-400" />
+          <span>Technical Domain</span>
+        </motion.div>
 
-        {/* Skills Workbench Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8 mb-32">
-          <AnimatePresence mode="popLayout">
-            {filteredSkills.map((skill) => (
-              <motion.div
-                key={skill.id}
-                layout
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                onClick={() => setSelectedSkill(selectedSkill === skill.id ? null : skill.id)}
-                className={`skill-card p-6 rounded-3xl cursor-pointer transition-all border ${selectedSkill === skill.id ? 'bg-indigo-500/5 border-indigo-500/40 shadow-2xl scale-105' : 'bg-white dark:bg-slate-900 shadow-sm border-slate-200 dark:border-white/5 hover:shadow-xl'}`}
-              >
-                <div className="flex flex-col items-center gap-4">
-                  <div className="text-2xl font-black text-indigo-500 font-serif">
-                    {skill.name.charAt(0)}
-                  </div>
-                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-indigo-500 transition-colors">
-                    {skill.name}
-                  </span>
-                </div>
-                {selectedSkill === skill.id && (
-                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4 space-y-2">
-                    <div className="flex justify-between text-[10px] font-black text-indigo-500">
-                      <span>Proficiency</span>
-                      <span>{skill.proficiency}%</span>
-                    </div>
-                    <div className="h-1 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                      <div className="h-full bg-indigo-500" style={{ width: `${skill.proficiency}%` }} />
-                    </div>
-                  </motion.div>
-                )}
-              </motion.div>
+        <h2 className="text-5xl md:text-9xl font-black tracking-tighter text-white mb-6 leading-none filter drop-shadow-[0_0_30px_rgba(79,70,229,0.2)]">
+          My digital <br /><span className="text-indigo-500 italic font-serif">arsenal</span>.
+        </h2>
+        <p className="text-base md:text-xl text-slate-500 font-medium leading-relaxed max-w-xl mx-auto opacity-80 px-4">
+          A full-immersion technical cloud. Hover to explore the gravitational expertise field.
+        </p>
+      </div>
+
+      {/* Expanded Canvas for Full Area Coverage */}
+      <div className="relative flex-1 min-h-[60vh] md:min-h-[800px] w-full flex items-center justify-center pointer-events-auto mt-10 md:mt-20">
+
+        {/* Connection Connections */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-visible" style={{ transformStyle: 'preserve-3d' }}>
+          <svg className="w-full h-full overflow-visible" viewBox="-1000 -1000 2000 2000">
+            {skills.map((_, i) => (
+              <path
+                key={`line-${i}`}
+                ref={(el) => (linesRef.current[i] = el)}
+                fill="none"
+                stroke="rgba(99, 102, 241, 0.4)"
+                strokeWidth="1"
+                strokeDasharray="2,4"
+              />
             ))}
-          </AnimatePresence>
+          </svg>
         </div>
 
-        {/* Continuous Journey */}
-        <div className="reveal-element p-12 rounded-[3rem] bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-white/5">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-12">
-            <div className="space-y-4 text-center md:text-left">
-              <h3 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white">Currently Exploring</h3>
-              <p className="text-sm text-slate-500 dark:text-slate-400 max-w-sm">
-                The craft never stops evolving. Here's what I'm currently adding to my bench.
-              </p>
+        {/* Dynamic Skill Constellation */}
+        <div ref={containerRef} className="absolute inset-0 w-full h-full flex items-center justify-center transform-style-3d">
+          {skills.map((skill, i) => (
+            <div
+              key={skill.id}
+              ref={(el) => (nodesRef.current[i] = el)}
+              className="absolute"
+            >
+              <SkillNode
+                skill={skill}
+                isSelected={selectedSkill === skill.id}
+                onSelect={() => setSelectedSkill(selectedSkill === skill.id ? null : skill.id)}
+              />
             </div>
-            <div className="flex flex-wrap gap-4 justify-center md:justify-end">
-              {exploring.map((exp, i) => (
-                <div key={i} className="px-6 py-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-white/10 shadow-sm text-center">
-                  <div className="text-xs font-black text-slate-900 dark:text-white mb-1">{exp.name}</div>
-                  <div className="text-[9px] font-black uppercase tracking-widest text-indigo-500">{exp.status}</div>
-                </div>
-              ))}
-            </div>
-          </div>
+          ))}
         </div>
       </div>
 
       <style>{`
-        @keyframes morph {
-          0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-          50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        @keyframes twinkle {
+          0%, 100% { opacity: 0.2; transform: scale(0.7); }
+          50% { opacity: 0.8; transform: scale(1.1); }
         }
-        .animate-morph { animation: morph 15s ease-in-out infinite; }
+        .animate-twinkle { animation: twinkle 5s ease-in-out infinite; }
       `}</style>
     </section>
   );
